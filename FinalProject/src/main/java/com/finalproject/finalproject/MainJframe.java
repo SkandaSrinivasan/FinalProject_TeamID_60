@@ -194,7 +194,7 @@ public class MainJframe extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UIManager.setLookAndFeel(new SubstanceGraphiteLookAndFeel());
+                    UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel());
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
                 }
