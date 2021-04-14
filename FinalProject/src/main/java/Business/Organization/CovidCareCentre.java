@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business.Hospital;
+package Business.Organization;
 
 /**
  *
  * @author kulbi
  */
-public class VaccinationControl {
+public class CovidCareCentre {
     
 }
