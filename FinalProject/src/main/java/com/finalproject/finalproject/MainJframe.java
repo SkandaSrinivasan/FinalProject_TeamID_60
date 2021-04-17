@@ -197,6 +197,7 @@ public class MainJframe extends javax.swing.JFrame {
                     UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel());
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
                 new MainJframe().setVisible(true);
             }
