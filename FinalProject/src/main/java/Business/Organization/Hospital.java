@@ -5,15 +5,12 @@
  */
 package Business.Organization;
 
-import Business.Person;
 import java.util.List;
 
 /**
  *
- * @author kulbi
+ * @author Skanda
  */
-public class Doctor extends Person{
-    Hospital hospital;
-    List<Patient> patientList;
-    
+class Hospital {
+    List<Doctor> doctorList;
 }

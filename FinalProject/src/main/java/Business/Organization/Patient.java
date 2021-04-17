@@ -6,14 +6,15 @@
 package Business.Organization;
 
 import Business.Person;
-import java.util.List;
+import Business.UserAccount;
 
 /**
  *
- * @author kulbi
+ * @author Skanda
  */
-public class Doctor extends Person{
-    Hospital hospital;
-    List<Patient> patientList;
-    
+public class Patient extends Person {
+    String patientId;
+    String insuranceNumber;
+    UserAccount user;
+    VaccinationRecord vaxRecord;
 }
