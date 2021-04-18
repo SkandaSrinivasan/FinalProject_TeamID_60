@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business;
+package Business.UserAccount;
 
 /**
  *
  * @author Skanda
  */
-public class UserAccount {
+public class UserAccountDirectory {
     
 }
