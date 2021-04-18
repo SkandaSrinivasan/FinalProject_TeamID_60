@@ -5,16 +5,10 @@
  */
 package Business.Organization;
 
-import Business.Person;
-import Business.UserAccount.UserAccount;
-
 /**
  *
  * @author Skanda
  */
-public class Patient extends Person {
-    String patientId;
-    String insuranceNumber;
-    UserAccount user;
-    VaccinationRecord vaxRecord;
+public class OrganizationDirectory {
+    
 }
