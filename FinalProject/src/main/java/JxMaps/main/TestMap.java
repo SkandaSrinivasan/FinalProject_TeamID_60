@@ -55,7 +55,7 @@ public class TestMap {
             frame.add(view, BorderLayout.CENTER);
             frame.setSize(800, 600);
             frame.setVisible(true);
- 
+
             browser.navigation().loadUrl("file:///"+Paths.get(".").toAbsolutePath().toString()
                     + "/src/main/java/JxMaps/main/map.html");
         });
