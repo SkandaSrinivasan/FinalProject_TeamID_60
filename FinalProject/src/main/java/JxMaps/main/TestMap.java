@@ -27,9 +27,10 @@ public class TestMap {
     // Right click + run file to run this. not part of usual flow
     public static void main(String[] args) {
         System.out.println(AppConfig.getInstance().getGMapsApiKey());
-        System.setProperty("jxbrowser.license.key", AppConfig.getInstance().getJXBrowserLicenseKey());
+//        System.setProperty("jxbrowser.license.key", AppConfig.getInstance().getJXBrowserLicenseKey());
         System.out.println("license done");
         Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.HARDWARE_ACCELERATED)
+                .licenseKey(AppConfig.getInstance().getJXBrowserLicenseKey())
                 .googleApiKey(AppConfig.getInstance().getGMapsApiKey())
                 .remoteDebuggingPort(9222)
                 .build());
