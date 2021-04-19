@@ -13,6 +13,7 @@ import com.teamdev.jxbrowser.view.swing.BrowserView;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -25,15 +26,16 @@ public class TestMap {
 
     // Right click + run file to run this. not part of usual flow
     public static void main(String[] args) {
-        System.setProperty("jxbrowser.license.key", "");
+        System.out.println(AppConfig.getInstance().getGMapsApiKey());
+        System.setProperty("jxbrowser.license.key", AppConfig.getInstance().getJXBrowserLicenseKey());
         System.out.println("license done");
         Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.HARDWARE_ACCELERATED)
-                .googleApiKey("")
+                .googleApiKey(AppConfig.getInstance().getGMapsApiKey())
                 .remoteDebuggingPort(9222)
                 .build());
         Browser browser = engine.newBrowser();
-           // load web page to browser
-        browser.navigation().loadUrl("https://google.com");
+        // load web page to browser
+//        browser.navigation().loadUrl("https://google.com");
 
         SwingUtilities.invokeLater(() -> {
             // Creating Swing component for rendering web content
@@ -53,6 +55,9 @@ public class TestMap {
             frame.add(view, BorderLayout.CENTER);
             frame.setSize(800, 600);
             frame.setVisible(true);
+ 
+            browser.navigation().loadUrl("file:///"+Paths.get(".").toAbsolutePath().toString()
+                    + "/src/main/java/JxMaps/main/map.html");
         });
 
     }
