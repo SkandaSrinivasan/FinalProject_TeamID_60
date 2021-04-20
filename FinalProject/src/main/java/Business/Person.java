@@ -5,6 +5,8 @@
  */
 package Business;
 
+import Business.Coordinates.Coordinates;
+
 /**
  *
  * @author Skanda
@@ -14,5 +16,9 @@ public class Person {
     String streetAddress;
     String zipcode;
     String homeNumber;
+    Coordinates coords;
     
+    public Person(String name){
+        this.name = name;
+    }
 }
