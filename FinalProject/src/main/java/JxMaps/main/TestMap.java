@@ -26,40 +26,8 @@ public class TestMap {
 
     // Right click + run file to run this. not part of usual flow
     public static void main(String[] args) {
-        System.out.println(AppConfig.getInstance().getGMapsApiKey());
-//        System.setProperty("jxbrowser.license.key", AppConfig.getInstance().getJXBrowserLicenseKey());
-        System.out.println("license done");
-        Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.HARDWARE_ACCELERATED)
-                .licenseKey(AppConfig.getInstance().getJXBrowserLicenseKey())
-                .googleApiKey(AppConfig.getInstance().getGMapsApiKey())
-                .remoteDebuggingPort(9222)
-                .build());
-        Browser browser = engine.newBrowser();
-        // load web page to browser
-//        browser.navigation().loadUrl("https://google.com");
 
-        SwingUtilities.invokeLater(() -> {
-            // Creating Swing component for rendering web content
-            // loaded in the given Browser instance
-            BrowserView view = BrowserView.newInstance(browser);
-
-            // Creating and displaying Swing app frame
-            JFrame frame = new JFrame("JxBrowser AWT/Swing");
-            // Closing the engine when app frame is about to close
-            frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    engine.close();
-                }
-            });
-            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            frame.add(view, BorderLayout.CENTER);
-            frame.setSize(800, 600);
-            frame.setVisible(true);
-
-            browser.navigation().loadUrl("file:///"+Paths.get(".").toAbsolutePath().toString()
-                    + "/src/main/java/JxMaps/main/map.html");
-        });
+        MapMarker mapMarker = new MapMarker("01803");
 
     }
 }

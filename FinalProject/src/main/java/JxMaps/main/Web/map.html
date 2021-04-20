@@ -22,11 +22,12 @@
     <script type="text/javascript">
       var map;
       function initMap() {
-        const myLatlng = { lat: -25.363, lng: 131.044 };
-        const map = new google.maps.Map(document.getElementById("map-canvas"), {
+        const myLatlng = { lat: 37.0902, lng: -95.7129 };
+        map = new google.maps.Map(document.getElementById("map-canvas"), {
           zoom: 4,
           center: myLatlng,
         });
+      
         // Create the initial InfoWindow.
         let infoWindow = new google.maps.InfoWindow({
           content: "Click the map to get Lat/Lng!",
