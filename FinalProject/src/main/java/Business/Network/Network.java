@@ -5,10 +5,19 @@
  */
 package Business.Network;
 
+import Business.Enterprise.EnterpriseDirectory;
+import Business.Organization.Organization;
+
 /**
  *
  * @author Skanda
  */
 public class Network {
+    EnterpriseDirectory enterpriseDir;
+    String name;
     
+    public Network(String name){
+        this.enterpriseDir = new EnterpriseDirectory();
+        this.name = name;
+    }
 }

@@ -5,12 +5,10 @@
  */
 package Business.Organization;
 
-import java.util.List;
-
 /**
  *
  * @author Skanda
  */
-class Hospital {
-    List<Doctor> doctorList;
+public class VaccineSiteOrganization {
+    
 }

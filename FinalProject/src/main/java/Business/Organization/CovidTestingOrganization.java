@@ -7,8 +7,8 @@ package Business.Organization;
 
 /**
  *
- * @author Skanda
+ * @author kulbi
  */
-public class Prescription {
+public class CovidTestingOrganization {
     
 }

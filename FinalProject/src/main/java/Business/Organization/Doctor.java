@@ -13,7 +13,7 @@ import java.util.List;
  * @author kulbi
  */
 public class Doctor extends Person{
-    Hospital hospital;
+    CovidCareCentre hospital;
     List<Patient> patientList;
     
 }
