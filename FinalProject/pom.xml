@@ -10,6 +10,11 @@
             <id>com.teamdev</id>
             <url>https://europe-maven.pkg.dev/jxbrowser/releases</url>
         </repository>
+        <repository>
+                <id>in-project</id>
+                <name>In Project Repo</name>
+                <url>file://${project.basedir}/libs</url>
+            </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -25,9 +30,10 @@
 
         <dependency>
             <groupId>group.id</groupId>
-            <artifactId>artifact.id</artifactId>
+            <artifactId>db4o</artifactId>
             <version>1.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
