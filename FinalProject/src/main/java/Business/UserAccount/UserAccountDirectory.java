@@ -5,10 +5,39 @@
  */
 package Business.UserAccount;
 
+import Business.Role.Role;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Skanda
  */
 public class UserAccountDirectory {
+    List<UserAccount> users;
+    
+    public UserAccountDirectory(){
+        this.users = new ArrayList<>();
+    }
+    
+    public void addUser(String userName,String password,Role role){
+        if(this.isUserUnique(userName)){
+            UserAccount newAcc = new UserAccount(userName, password, role);
+            this.users.add(newAcc);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "User already exists","Error adding user",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public boolean isUserUnique(String uname){
+        for(UserAccount user:this.users){
+            if(user.getUserName().equals(uname)){
+                return false;
+            }
+        }
+        return true;
+    }
     
 }

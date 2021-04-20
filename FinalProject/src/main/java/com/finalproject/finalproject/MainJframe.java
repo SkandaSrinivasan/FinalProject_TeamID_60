@@ -1,6 +1,7 @@
 package com.finalproject.finalproject;
 
-
+import Business.DB4OUtil.DB4OUtil;
+import Business.EcoSystem;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
@@ -14,7 +15,6 @@ import org.pushingpixels.substance.api.skin.*;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Skanda
@@ -24,8 +24,15 @@ public class MainJframe extends javax.swing.JFrame {
     /**
      * Creates new form MainJframe
      */
+    private EcoSystem system;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+
     public MainJframe() {
         initComponents();
+        system = dB4OUtil.retrieveSystem();
+        this.setSize(1500, 800);
+
+        userDirectory.createUserAccount("Admin", "Admin", new SystemAdminRole());
     }
 
     /**
@@ -114,6 +121,11 @@ public class MainJframe extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(0, 181, 204));
         jButton2.setText("Login");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 181, 204)));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 150, 40));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -152,16 +164,20 @@ public class MainJframe extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextField2.setText("");
         jTextField2.setEditable(true);
-        
-        
+
+
     }//GEN-LAST:event_jTextField2MouseClicked
 
     private void jTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField3MouseClicked
         // TODO add your handling code here:
         jTextField3.setText("");
         jTextField3.setEditable(true);
-        
+
     }//GEN-LAST:event_jTextField3MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,7 +213,7 @@ public class MainJframe extends javax.swing.JFrame {
                     UIManager.setLookAndFeel(new SubstanceModerateLookAndFeel());
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
-                    
+
                 }
                 new MainJframe().setVisible(true);
             }
