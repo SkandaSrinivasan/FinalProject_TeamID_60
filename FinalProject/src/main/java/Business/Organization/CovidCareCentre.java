@@ -5,10 +5,46 @@
  */
 package Business.Organization;
 
+import Business.Coordinates.Coordinates;
+
 /**
  *
  * @author kulbi
  */
-public class CovidCareCentre {
+public class CovidCareCentre extends Organization {
+
+    String name;
+    String street;
+    Coordinates coord;
+
+    public CovidCareCentre(String name) {
+        super(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public Coordinates getCoord() {
+        return coord;
+    }
+
+    public void setCoord(Coordinates coord) {
+        this.coord = coord;
+    }
+
+
     
 }

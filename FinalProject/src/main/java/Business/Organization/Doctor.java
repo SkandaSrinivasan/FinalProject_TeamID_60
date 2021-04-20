@@ -5,15 +5,19 @@
  */
 package Business.Organization;
 
+import Business.Employee.Employee;
 import Business.Person;
+import Business.UserAccount.UserAccount;
 import java.util.List;
 
 /**
  *
  * @author kulbi
  */
-public class Doctor extends Person{
-    CovidCareCentre hospital;
+public class Doctor extends Employee{
+    CovidCareCentre careCenter;
     List<Patient> patientList;
+    String fullName;
+    UserAccount user;
     
 }

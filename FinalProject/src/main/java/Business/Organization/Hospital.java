@@ -5,18 +5,10 @@
  */
 package Business.Organization;
 
-import java.util.List;
-
 /**
  *
- * @author kulbi
+ * @author Skanda
  */
-public class CovidTestingOrganization extends Organization{
-    List<CovidTest> tests;
-    String name;
-    public CovidTestingOrganization(String name){
-        super(name);
-  
-    }
+class Hospital {
     
 }

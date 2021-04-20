@@ -5,6 +5,7 @@
  */
 package Business.Organization;
 
+import Business.Coordinates.Coordinates;
 import Business.Employee.EmployeeDirectory;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
@@ -21,6 +22,7 @@ public class Organization {
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     private static int counter=0;
+    Coordinates coord;
     
     public enum Type{
         RestaurantAdmin("RestaurantAdmin"),
@@ -46,38 +48,61 @@ public class Organization {
         ++counter;
     }
 
-//    public abstract ArrayList<Role> getSupportedRole();
-//    
-//    public UserAccountDirectory getUserAccountDirectory() {
-//        return userAccountDirectory;
-//    }
-//
-//    public int getOrganizationID() {
-//        return organizationID;
-//    }
-//
-//    public EmployeeDirectory getEmployeeDirectory() {
-//        return employeeDirectory;
-//    }
-//    
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public WorkQueue getWorkQueue() {
-//        return workQueue;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setWorkQueue(WorkQueue workQueue) {
-//        this.workQueue = workQueue;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return name;
-//    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public WorkQueue getWorkQueue() {
+        return workQueue;
+    }
+
+    public void setWorkQueue(WorkQueue workQueue) {
+        this.workQueue = workQueue;
+    }
+
+    public EmployeeDirectory getEmployeeDirectory() {
+        return employeeDirectory;
+    }
+
+    public void setEmployeeDirectory(EmployeeDirectory employeeDirectory) {
+        this.employeeDirectory = employeeDirectory;
+    }
+
+    public UserAccountDirectory getUserAccountDirectory() {
+        return userAccountDirectory;
+    }
+
+    public void setUserAccountDirectory(UserAccountDirectory userAccountDirectory) {
+        this.userAccountDirectory = userAccountDirectory;
+    }
+
+    public int getOrganizationID() {
+        return organizationID;
+    }
+
+    public void setOrganizationID(int organizationID) {
+        this.organizationID = organizationID;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        Organization.counter = counter;
+    }
+
+    public Coordinates getCoord() {
+        return coord;
+    }
+
+    public void setCoord(Coordinates coord) {
+        this.coord = coord;
+    }
+
+
 }
