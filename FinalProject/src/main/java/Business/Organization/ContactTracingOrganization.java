@@ -9,6 +9,6 @@ package Business.Organization;
  *
  * @author kulbi
  */
-public class Pharmacy {
+public class ContactTracingOrganization {
     
 }

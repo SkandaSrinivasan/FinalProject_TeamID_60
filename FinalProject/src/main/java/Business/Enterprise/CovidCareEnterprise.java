@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business;
+package Business.Enterprise;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author Skanda
  */
-public class ConfigureASystem {
-    
-    public static EcoSystem configure(){
-        
-        EcoSystem system = EcoSystem.getInstance();
-       
-        
-        return system;
+public class CovidCareEnterprise extends Enterprise{
+
+    public CovidCareEnterprise(String name) {
+        super(name, Enterprise.EnterpriseType.CovidCareUnit);
     }
     
 }

@@ -52,6 +52,7 @@ public class MapMarker {
                 = EngineOptions.newBuilder(HARDWARE_ACCELERATED)
                         .licenseKey(AppConfig.getInstance().getJXBrowserLicenseKey())
                         .build();
+            System.out.println(AppConfig.getInstance().getJXBrowserLicenseKey());
         Engine engine = Engine.newInstance(options);
         Browser browser = engine.newBrowser();
 

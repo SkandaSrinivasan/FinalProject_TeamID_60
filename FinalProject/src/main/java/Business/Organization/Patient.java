@@ -16,5 +16,4 @@ public class Patient extends Person {
     String patientId;
     String insuranceNumber;
     UserAccount user;
-    VaccinationRecord vaxRecord;
 }

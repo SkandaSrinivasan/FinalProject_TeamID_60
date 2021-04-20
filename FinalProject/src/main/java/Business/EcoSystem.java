@@ -5,7 +5,9 @@
  */
 package Business;
 
+import Business.Network.Network;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,7 +15,7 @@ import java.util.ArrayList;
  */
 public class EcoSystem {
      private static EcoSystem business;
-    
+     private List<Network> networkList;
     public static EcoSystem getInstance(){
         if(business==null){
             business=new EcoSystem();
@@ -22,7 +24,7 @@ public class EcoSystem {
     }
     
     EcoSystem(){
-       // networkList=new ArrayList<Network>();
+       networkList=new ArrayList<Network>();
     }
 
     

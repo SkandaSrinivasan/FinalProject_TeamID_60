@@ -10,7 +10,7 @@ import Business.Organization.OrganizationDirectory;
 
 /**
  *
- * @author MyPC1
+ * @author Skanda
  */
 public abstract class Enterprise extends Organization{
     
@@ -24,7 +24,7 @@ public abstract class Enterprise extends Organization{
 
 
     public enum EnterpriseType{
-        CovidCareUnit("CovidCareUnit"), VaccinationUnit("Vaccination Unit"), ContactTracingUnit("Contact Tracing Unit"); 
+        CovidCareUnit("CovidCareUnit"), VaccinationUnit("Vaccination Unit"), ContactTracingUnit("Contact Tracing Unit"),AnalyticsUnit("Analytics Unit"); 
         
         private String value;
         

@@ -7,8 +7,8 @@ package Business.Organization;
 
 /**
  *
- * @author kulbi
+ * @author Skanda
  */
-public class ContactTracer {
+public class VolunteerContactTracingOrganization {
     
 }

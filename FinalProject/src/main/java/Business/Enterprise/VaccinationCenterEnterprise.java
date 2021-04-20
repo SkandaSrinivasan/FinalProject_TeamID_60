@@ -3,20 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business;
+package Business.Enterprise;
 
 /**
  *
  * @author Skanda
  */
-public class ConfigureASystem {
-    
-    public static EcoSystem configure(){
-        
-        EcoSystem system = EcoSystem.getInstance();
-       
-        
-        return system;
+public class VaccinationCenterEnterprise extends Enterprise {
+    public VaccinationCenterEnterprise(String name) {
+        super(name, Enterprise.EnterpriseType.VaccinationUnit);
     }
-    
 }
