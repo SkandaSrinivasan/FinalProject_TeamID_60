@@ -11,7 +11,11 @@ import Business.UserAccount.UserAccountDirectory;
 import Role.SystemAdminRole;
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceDustLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceGeminiLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteChalkLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteGoldLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceMagellanLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceNebulaLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceNightShadeLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceSaharaLookAndFeel;
 
