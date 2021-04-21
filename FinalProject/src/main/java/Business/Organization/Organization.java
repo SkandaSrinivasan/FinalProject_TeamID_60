@@ -9,6 +9,7 @@ import Business.Coordinates.Coordinates;
 import Business.Employee.EmployeeDirectory;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
+import JxMaps.main.Modal.LatLong;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +23,7 @@ public class Organization {
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     private static int counter=0;
-    Coordinates coord;
+    LatLong coord;
     
     public enum Type{
         RestaurantAdmin("RestaurantAdmin"),
