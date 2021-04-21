@@ -5,6 +5,7 @@
  */
 package UI.SystemAdmin;
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.UserAccount.UserAccount;
 import com.finalproject.finalproject.LoginPanel;
@@ -23,11 +24,12 @@ public class SystemAdminPanel extends javax.swing.JPanel {
      */
     EcoSystem system;
     UserAccount account;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
 
-    public SystemAdminPanel(JPanel userProcessContainer, UserAccount account, EcoSystem business) {
+    public SystemAdminPanel(JPanel userProcessContainer, UserAccount account, EcoSystem system) {
         initComponents();
         this.account = account;
-        this.system = business;
+        this.system = system;
     }
 
     /**
@@ -41,49 +43,20 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
-        manageNetworkBtn = new javax.swing.JButton();
-        manageOrganizationBtn = new javax.swing.JButton();
-        btnLogout = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-
-        manageNetworkBtn.setText("Manage Networks");
-        manageNetworkBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manageNetworkBtnActionPerformed(evt);
-            }
-        });
-
-        manageOrganizationBtn.setText("Manage Organizations");
-
-        btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
+        manageOrganizationBtn = new javax.swing.JButton();
+        manageNetworkBtn = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(manageNetworkBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(manageOrganizationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 161, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(manageNetworkBtn)
-                .addGap(18, 18, 18)
-                .addComponent(manageOrganizationBtn)
-                .addGap(18, 18, 18)
-                .addComponent(btnLogout)
-                .addContainerGap(494, Short.MAX_VALUE))
+            .addGap(0, 602, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -92,7 +65,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 767, Short.MAX_VALUE)
+            .addGap(0, 552, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,12 +74,38 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         jSplitPane1.setRightComponent(jPanel2);
 
+        manageOrganizationBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-organization-chart-people-24.png"))); // NOI18N
+        manageOrganizationBtn.setText("Manage Organizations");
+        manageOrganizationBtn.setBorder(null);
+
+        manageNetworkBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-networking-manager-24.png"))); // NOI18N
+        manageNetworkBtn.setText("Manage Networks          ");
+        manageNetworkBtn.setBorder(null);
+        manageNetworkBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageNetworkBtnActionPerformed(evt);
+            }
+        });
+
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-exit-24.png"))); // NOI18N
+        btnLogout.setText("Logout                           ");
+        btnLogout.setBorder(null);
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(manageOrganizationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(manageNetworkBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(btnLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSplitPane1)
                 .addContainerGap())
         );
@@ -114,23 +113,34 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(manageNetworkBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(manageOrganizationBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSplitPane1)))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnLogout, manageNetworkBtn, manageOrganizationBtn});
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageNetworkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageNetworkBtnActionPerformed
         // TODO add your handling code here:
-        ManageNetworkPanel networkPanel = new ManageNetworkPanel();
+        ManageNetworkPanel networkPanel = new ManageNetworkPanel(system);
         jSplitPane1.setRightComponent(networkPanel);
     }//GEN-LAST:event_manageNetworkBtnActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-
         topFrame.getContentPane().removeAll();
         topFrame.setContentPane(new LoginPanel(this.system));
         topFrame.revalidate();
+        dB4OUtil.storeSystem(system);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
 

@@ -24,7 +24,6 @@ import javax.swing.WindowConstants;
  */
 public class TestMap {
 
-    // Right click + run file to run this. not part of usual flow
     public static void main(String[] args) {
 
         MapMarker mapMarker = new MapMarker("01803");

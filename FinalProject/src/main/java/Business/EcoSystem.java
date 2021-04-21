@@ -9,7 +9,9 @@ import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import Business.UserAccount.UserAccountDirectory;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -18,7 +20,7 @@ import java.util.List;
 public class EcoSystem {
 
     private static EcoSystem business;
-    private List<Network> networkList;
+    private Map<String,Network> networkMap;
     UserAccountDirectory userDir;
 
     public static EcoSystem getInstance() {
@@ -29,7 +31,7 @@ public class EcoSystem {
     }
 
     EcoSystem() {
-        networkList = new ArrayList<Network>();
+        this.networkMap = new HashMap<>();
         userDir = new UserAccountDirectory();
     }
 
@@ -41,13 +43,7 @@ public class EcoSystem {
         EcoSystem.business = business;
     }
 
-    public List<Network> getNetworkList() {
-        return networkList;
-    }
 
-    public void setNetworkList(List<Network> networkList) {
-        this.networkList = networkList;
-    }
 
     public UserAccountDirectory getUserDir() {
         return userDir;
@@ -55,6 +51,14 @@ public class EcoSystem {
 
     public void setUserDir(UserAccountDirectory userDir) {
         this.userDir = userDir;
+    }
+
+    public Map<String, Network> getNetworkMap() {
+        return networkMap;
+    }
+
+    public void setNetworkMap(Map<String, Network> networkMap) {
+        this.networkMap = networkMap;
     }
 
 }
