@@ -26,7 +26,7 @@ public class TestMap {
 
     public static void main(String[] args) {
 
-        MapMarker mapMarker = new MapMarker("01803");
+        MapMarker mapMarker = new MapMarker();
 
     }
 }

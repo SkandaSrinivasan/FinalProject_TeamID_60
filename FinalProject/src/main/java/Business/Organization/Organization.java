@@ -17,24 +17,27 @@ import java.util.ArrayList;
  * @author Skanda
  */
 public class Organization {
+
     private String name;
     private WorkQueue workQueue;
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
-    private static int counter=0;
+    private static int counter = 0;
     LatLong coord;
-    
-    public enum Type{
+
+    public enum Type {
         RestaurantAdmin("RestaurantAdmin"),
         Customer("Customer"),
         DeliveryMan("Delivery"),
         SysAdmin("Sysadmin");
-        
+
         private String value;
+
         private Type(String value) {
             this.value = value;
         }
+
         public String getValue() {
             return value;
         }
@@ -96,14 +99,5 @@ public class Organization {
     public static void setCounter(int counter) {
         Organization.counter = counter;
     }
-
-    public Coordinates getCoord() {
-        return coord;
-    }
-
-    public void setCoord(Coordinates coord) {
-        this.coord = coord;
-    }
-
 
 }
