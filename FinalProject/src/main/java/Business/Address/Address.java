@@ -5,13 +5,22 @@
  */
 package Business.Address;
 
+import JxMaps.main.Modal.LatLong;
+
 /**
  *
  * @author Skanda
  */
 public class Address {
+
     String streetAddress;
     String zipcode;
+    LatLong coords;
+
+    public Address(String street, String zipcode) {
+        this.streetAddress = street;
+        this.zipcode = zipcode;
+    }
 
     public String getStreetAddress() {
         return streetAddress;
@@ -28,5 +37,5 @@ public class Address {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-    
+
 }

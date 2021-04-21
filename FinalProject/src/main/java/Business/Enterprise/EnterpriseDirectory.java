@@ -29,5 +29,14 @@ public class EnterpriseDirectory {
 
     }
     
+    public Enterprise getEnterprise(String name){
+        for(Enterprise ent:this.enterpriseList){
+            if(ent.getName().equals(name)){
+                return ent;
+            }
+        }
+        return null;
+    }
+    
 
 }

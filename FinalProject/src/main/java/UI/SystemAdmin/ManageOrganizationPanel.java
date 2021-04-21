@@ -5,7 +5,13 @@
  */
 package UI.SystemAdmin;
 
+import Business.Address.Address;
 import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import UI.HospitalPanel;
+import Business.Organization.CovidCareCenter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,11 +23,12 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
      * Creates new form ManageOrganizationPanel
      */
     EcoSystem system;
+
     public ManageOrganizationPanel(EcoSystem system) {
         this.system = system;
         initComponents();
         networkBox.removeAllItems();
-        for(String s:system.getNetworkMap().keySet()){
+        for (String s : system.getNetworkMap().keySet()) {
             networkBox.addItem(s);
         }
     }
@@ -42,13 +49,13 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         orgBox = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         networkBox = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        txtOrgName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtStreet = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtZip = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -58,7 +65,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         jLabel2.setText("Select Enterprise:");
 
         entBox.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        entBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Covid Care", "Vaccination Unit", "Contact Tracing" }));
+        entBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Covid Care", "Vaccination Unit", "Contact Tracing", "Covid Analytics" }));
         entBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entBoxActionPerformed(evt);
@@ -85,6 +92,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-create-24.png"))); // NOI18N
         jButton1.setText("Add Organization");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel6.setText("Street Address");
@@ -109,9 +121,9 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3)
+                    .addComponent(txtOrgName)
+                    .addComponent(txtStreet)
+                    .addComponent(txtZip)
                     .addComponent(networkBox, 0, 140, Short.MAX_VALUE)
                     .addComponent(entBox, 0, 140, Short.MAX_VALUE)
                     .addComponent(orgBox, 0, 140, Short.MAX_VALUE))
@@ -120,7 +132,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {entBox, jTextField1, jTextField2, jTextField3, networkBox, orgBox});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {entBox, networkBox, orgBox, txtOrgName, txtStreet, txtZip});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,15 +154,15 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtOrgName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(280, Short.MAX_VALUE))
@@ -158,28 +170,30 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7});
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {entBox, jTextField1, jTextField2, jTextField3, networkBox, orgBox});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {entBox, networkBox, orgBox, txtOrgName, txtStreet, txtZip});
 
     }// </editor-fold>//GEN-END:initComponents
 
     private void entBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entBoxActionPerformed
         // TODO add your handling code here:
-        
-        if(!entBox.getSelectedItem().toString().equals("")){
+
+        if (!entBox.getSelectedItem().toString().equals("")) {
             String enter = entBox.getSelectedItem().toString();
-            if(enter.equalsIgnoreCase("Covid Care")){
-                 orgBox.removeAll();
-                 orgBox.addItem("Covid Care Center");
-                 orgBox.addItem("Pharmacy");
-           }
-            else if(enter.equalsIgnoreCase("Contact Tracing")){
+            if (enter.equalsIgnoreCase("Covid Care")) {
+                orgBox.removeAll();
+                orgBox.addItem("Covid Care Center");
+                orgBox.addItem("Pharmacy");
+            } else if (enter.equalsIgnoreCase("Contact Tracing")) {
                 orgBox.removeAll();
                 orgBox.addItem("State Contact Tracing");
                 orgBox.addItem("Volunteer Contact Tracing");
-            }
-            else if(enter.equalsIgnoreCase("Vaccine Distribution")){
+            } else if (enter.equalsIgnoreCase("Vaccination Unit")) {
                 orgBox.removeAll();
-                
+                orgBox.addItem("Vaccination Site");
+                orgBox.addItem("Vaccine Supplier");
+            } else if (enter.equalsIgnoreCase("Covid Analytics")) {
+                orgBox.removeAll();
+                orgBox.addItem("State/Network Analytics Centre");
             }
         }
     }//GEN-LAST:event_entBoxActionPerformed
@@ -187,6 +201,23 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private void orgBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_orgBoxActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (!orgBox.getSelectedItem().toString().equals("")) {
+            Network net = system.getNetworkMap().get(networkBox.getSelectedItem().toString());
+            Enterprise ent = net.getEnterpriseDir().getEnterprise(entBox.getSelectedItem().toString());
+            String org = orgBox.getSelectedItem().toString();
+            if (org.equalsIgnoreCase("Covid Care Centre")) {
+                CovidCareCenter hosp = new CovidCareCenter(txtOrgName.getText());
+                Address addr = new Address(txtStreet.getText(), txtZip.getText());
+                hosp.setAddress(addr);
+               
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a organization to add", "Create fail", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -199,10 +230,10 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JComboBox<String> networkBox;
     private javax.swing.JComboBox<String> orgBox;
+    private javax.swing.JTextField txtOrgName;
+    private javax.swing.JTextField txtStreet;
+    private javax.swing.JTextField txtZip;
     // End of variables declaration//GEN-END:variables
 }

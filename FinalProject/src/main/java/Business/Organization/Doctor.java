@@ -15,7 +15,7 @@ import java.util.List;
  * @author kulbi
  */
 public class Doctor extends Employee{
-    CovidCareCentre careCenter;
+    CovidCareCenter careCenter;
     List<Patient> patientList;
     String fullName;
     UserAccount user;
