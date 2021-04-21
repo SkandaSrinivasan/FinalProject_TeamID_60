@@ -44,13 +44,13 @@ public class LoginPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setText("UserName");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel2.setText("Password");
 
-        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogin.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-enter-24.png"))); // NOI18N
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
