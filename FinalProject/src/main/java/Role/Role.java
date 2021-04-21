@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business.Role;
+package Role;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * @author Skanda
  */
 public abstract class Role {
-    
+    String name;
     public enum RoleType{
         SystemAdmin("SystemAdmin"),
         VaccineSiteAdmin("VaccineSiteAdmin");
@@ -35,11 +35,7 @@ public abstract class Role {
         }
     }
     
-    public abstract JPanel createWorkArea(JPanel userProcessContainer, 
-            UserAccount account, 
-            Organization organization, 
-            Enterprise enterprise,
-            Network network,
+    public abstract JPanel createWorkArea(JPanel userProcessContainer,UserAccount account, 
             EcoSystem business);
 
     @Override
