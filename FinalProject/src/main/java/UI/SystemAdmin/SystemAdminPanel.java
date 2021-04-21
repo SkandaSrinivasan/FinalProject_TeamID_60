@@ -5,6 +5,13 @@
  */
 package UI.SystemAdmin;
 
+import Business.EcoSystem;
+import Business.UserAccount.UserAccount;
+import com.finalproject.finalproject.LoginPanel;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author Skanda
@@ -14,8 +21,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     /**
      * Creates new form SystemAdminPanel
      */
-    public SystemAdminPanel() {
+    EcoSystem system;
+    UserAccount account;
+
+    public SystemAdminPanel(JPanel userProcessContainer, UserAccount account, EcoSystem business) {
         initComponents();
+        this.account = account;
+        this.system = business;
     }
 
     /**
@@ -31,6 +43,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         manageNetworkBtn = new javax.swing.JButton();
         manageOrganizationBtn = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         manageNetworkBtn.setText("Manage Networks");
@@ -42,6 +55,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         manageOrganizationBtn.setText("Manage Organizations");
 
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -50,7 +70,8 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(manageNetworkBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(manageOrganizationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(manageOrganizationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -60,7 +81,9 @@ public class SystemAdminPanel extends javax.swing.JPanel {
                 .addComponent(manageNetworkBtn)
                 .addGap(18, 18, 18)
                 .addComponent(manageOrganizationBtn)
-                .addContainerGap(534, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnLogout)
+                .addContainerGap(494, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -84,7 +107,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 933, Short.MAX_VALUE)
+                .addComponent(jSplitPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,10 +121,21 @@ public class SystemAdminPanel extends javax.swing.JPanel {
     private void manageNetworkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageNetworkBtnActionPerformed
         // TODO add your handling code here:
         ManageNetworkPanel networkPanel = new ManageNetworkPanel();
+        jSplitPane1.setRightComponent(networkPanel);
     }//GEN-LAST:event_manageNetworkBtnActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        topFrame.getContentPane().removeAll();
+        topFrame.setContentPane(new LoginPanel(this.system));
+        topFrame.revalidate();
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogout;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSplitPane jSplitPane1;

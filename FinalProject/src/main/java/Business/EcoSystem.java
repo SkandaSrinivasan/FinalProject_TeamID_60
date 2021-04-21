@@ -33,4 +33,28 @@ public class EcoSystem {
         userDir = new UserAccountDirectory();
     }
 
+    public static EcoSystem getBusiness() {
+        return business;
+    }
+
+    public static void setBusiness(EcoSystem business) {
+        EcoSystem.business = business;
+    }
+
+    public List<Network> getNetworkList() {
+        return networkList;
+    }
+
+    public void setNetworkList(List<Network> networkList) {
+        this.networkList = networkList;
+    }
+
+    public UserAccountDirectory getUserDir() {
+        return userDir;
+    }
+
+    public void setUserDir(UserAccountDirectory userDir) {
+        this.userDir = userDir;
+    }
+
 }

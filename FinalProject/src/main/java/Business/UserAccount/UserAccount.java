@@ -5,7 +5,7 @@
  */
 package Business.UserAccount;
 
-import Business.Role.Role;
+import Role.Role;
 
 /**
  *

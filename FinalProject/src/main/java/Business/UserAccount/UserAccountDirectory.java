@@ -5,7 +5,7 @@
  */
 package Business.UserAccount;
 
-import Business.Role.Role;
+import Role.Role;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -38,6 +38,15 @@ public class UserAccountDirectory {
             }
         }
         return true;
+    }
+
+    public UserAccount authenticateUser(String uname, String pass) {
+        for(UserAccount user:this.users){
+            if(user.getUserName().equals(uname) && user.getPassword().equals(pass)){
+                return user;
+            }
+        }
+        return null;
     }
     
 }
