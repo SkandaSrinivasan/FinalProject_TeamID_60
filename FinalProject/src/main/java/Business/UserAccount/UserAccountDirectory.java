@@ -21,13 +21,14 @@ public class UserAccountDirectory {
         this.users = new ArrayList<>();
     }
     
-    public void addUser(String userName,String password,Role role){
+    public boolean addUser(String userName,String password,Role role){
         if(this.isUserUnique(userName)){
             UserAccount newAcc = new UserAccount(userName, password, role);
             this.users.add(newAcc);
+            return true;
         }
         else{
-            JOptionPane.showMessageDialog(null, "User already exists","Error adding user",JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
     

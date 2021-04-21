@@ -20,4 +20,21 @@ public class Network {
         this.enterpriseDir = new EnterpriseDirectory();
         this.name = name;
     }
+
+    public EnterpriseDirectory getEnterpriseDir() {
+        return enterpriseDir;
+    }
+
+    public void setEnterpriseDir(EnterpriseDirectory enterpriseDir) {
+        this.enterpriseDir = enterpriseDir;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 }

@@ -29,13 +29,7 @@ public class MapMarker {
     private static final int MIN_ZOOM = 0;
     private static final int MAX_ZOOM = 21;
     private static String setMarkerScript
-            = "var myLatlng = new google.maps.LatLng(48.4431727,23.0488126);\n"
-            + "var marker = new google.maps.Marker({\n"
-            + "    position: myLatlng,\n"
-            + "    map: map,\n"
-            + "    title: 'Hello World!'\n"
-            + "});";
-
+            = "";
     private static int zoomValue = 4;
 
     public static String setMarkerOnMap(String lat, String longitude) {
@@ -52,7 +46,6 @@ public class MapMarker {
                 = EngineOptions.newBuilder(HARDWARE_ACCELERATED)
                         .licenseKey(AppConfig.getInstance().getJXBrowserLicenseKey())
                         .build();
-            System.out.println(AppConfig.getInstance().getJXBrowserLicenseKey());
         Engine engine = Engine.newInstance(options);
         Browser browser = engine.newBrowser();
 
@@ -60,7 +53,7 @@ public class MapMarker {
             BrowserView view = BrowserView.newInstance(browser);
 
             JButton zoomInButton = new JButton("Zoom In");
-//            ############## USAGE  ##########################
+
             ZipCodeResolver zipCodeResolver = new ZipCodeResolver();
             UsZipCode zipDetails = zipCodeResolver.getDetailsForUsZipCode(zipCode);
             System.out.println(zipDetails);

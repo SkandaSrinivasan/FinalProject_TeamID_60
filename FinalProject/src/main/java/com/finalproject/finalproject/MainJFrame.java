@@ -12,6 +12,8 @@ import Role.SystemAdminRole;
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceDustLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceMagellanLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceNightShadeLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceSaharaLookAndFeel;
 
 /**
  *
@@ -30,7 +32,7 @@ public class MainJFrame extends javax.swing.JFrame {
         this.system = dB4OUtil.retrieveSystem();
         this.setSize(1500, 800);
 
-        this.system.getUserDir().addUser("Admin", "Admin", new SystemAdminRole());
+         this.system.getUserDir().addUser("Admin", "Admin", new SystemAdminRole());
     }
 
     /**
@@ -79,7 +81,7 @@ public class MainJFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try{
-                    UIManager.setLookAndFeel(new SubstanceMagellanLookAndFeel());
+                    UIManager.setLookAndFeel(new SubstanceNightShadeLookAndFeel());
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -90,6 +92,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 lpanel.setVisible(true);
                 mf.setContentPane(lpanel);
                 mf.revalidate();
+                System.out.println(mf.system.getNetworkMap());
                 
             }
         });
