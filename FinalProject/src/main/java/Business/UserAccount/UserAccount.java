@@ -12,11 +12,12 @@ import Role.Role;
  * @author Skanda
  */
 public class UserAccount {
+
     String userName;
     String password;
     Role userRole;
-    
-    public UserAccount(String userName,String password,Role usrRole){
+
+    public UserAccount(String userName, String password, Role usrRole) {
         this.userName = userName;
         this.password = password;
         this.userRole = usrRole;
@@ -45,5 +46,16 @@ public class UserAccount {
     public void setUserRole(Role userRole) {
         this.userRole = userRole;
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof UserAccount)) {
+            return false;
+        }
+        UserAccount ua = (UserAccount) o;
+        return this.getUserName().equals(ua.getUserName());
+    }
 }
