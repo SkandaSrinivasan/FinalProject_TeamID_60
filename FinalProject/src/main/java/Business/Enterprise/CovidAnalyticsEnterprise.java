@@ -5,12 +5,27 @@
  */
 package Business.Enterprise;
 
+import Business.Organization.CovidAnalyticsOrganization;
+import Business.Organization.OrganizationDirectory;
+import java.util.List;
+
 /**
  *
  * @author Skanda
  */
 public class CovidAnalyticsEnterprise extends Enterprise {
+    List<CovidAnalyticsOrganization> analytics;
     public CovidAnalyticsEnterprise(String name) {
         super(name, Enterprise.EnterpriseType.AnalyticsUnit);
+        this.setOrganizationDirectory(new OrganizationDirectory());
+        
+    }
+
+    public List<CovidAnalyticsOrganization> getAnalytics() {
+        return analytics;
+    }
+
+    public void setAnalytics(List<CovidAnalyticsOrganization> analytics) {
+        this.analytics = analytics;
     }
 }

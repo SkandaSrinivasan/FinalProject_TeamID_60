@@ -5,11 +5,14 @@
  */
 package Business.Organization;
 
+import Business.Address.Address;
 import Business.Coordinates.Coordinates;
 import Business.Employee.EmployeeDirectory;
+import Business.UserAccount.UserAccount;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
 import JxMaps.main.Modal.LatLong;
+import Role.Role;
 import java.util.ArrayList;
 
 /**
@@ -23,10 +26,12 @@ public class Organization {
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
-    private static int counter = 0;
-    LatLong coord;
-
-    public enum Type {
+    LatLong location;
+    private static int counter=0;
+    Address address;
+    Role role;
+    UserAccount user;
+    public enum Type{
         RestaurantAdmin("RestaurantAdmin"),
         Customer("Customer"),
         DeliveryMan("Delivery"),
@@ -98,6 +103,37 @@ public class Organization {
 
     public static void setCounter(int counter) {
         Organization.counter = counter;
+    }
+
+
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public LatLong getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLong location) {
+        this.location = location;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+@Override
+    public String toString() {
+        return this.name;
     }
 
 }

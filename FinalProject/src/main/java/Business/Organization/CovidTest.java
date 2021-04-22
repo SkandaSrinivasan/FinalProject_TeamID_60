@@ -12,7 +12,7 @@ package Business.Organization;
 public class CovidTest {
     Patient testingPatient;
     Doctor referringDoctor;
-    Hospital referringHospital;
+    CovidCareCenter referringHospital;
     public enum TestOutcome{
         Positive("Positive"),
         Negative("Negative");
@@ -29,7 +29,7 @@ public class CovidTest {
             return value;
         }
     }
-    public CovidTest(Patient pat,Doctor doc,Hospital hosp){
+    public CovidTest(Patient pat,Doctor doc,CovidCareCenter hosp){
         this.testingPatient = pat;
         this.referringDoctor = doc;
         this.referringHospital = hosp;

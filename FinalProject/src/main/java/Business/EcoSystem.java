@@ -8,6 +8,7 @@ package Business;
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import Business.UserAccount.UserAccountDirectory;
+import JxMaps.main.Modal.LatLong;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ public class EcoSystem {
     private static EcoSystem business;
     private Map<String,Network> networkMap;
     UserAccountDirectory userDir;
-
+    LatLong tempLocation;
     public static EcoSystem getInstance() {
         if (business == null) {
             business = new EcoSystem();
@@ -59,6 +60,14 @@ public class EcoSystem {
 
     public void setNetworkMap(Map<String, Network> networkMap) {
         this.networkMap = networkMap;
+    }
+
+    public LatLong getTempLocation() {
+        return tempLocation;
+    }
+
+    public void setTempLocation(LatLong tempLocation) {
+        this.tempLocation = tempLocation;
     }
 
 }

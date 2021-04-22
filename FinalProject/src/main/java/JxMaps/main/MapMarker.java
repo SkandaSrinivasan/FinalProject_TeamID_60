@@ -5,6 +5,7 @@
  */
 package JxMaps.main;
 
+import Business.EcoSystem;
 import JxMaps.main.AppConfig;
 import JxMaps.main.Modal.LatLong;
 import JxMaps.main.Modal.UsZipCode;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -34,6 +36,7 @@ public class MapMarker {
 
     private static final int MIN_ZOOM = 0;
     private static final int MAX_ZOOM = 21;
+
     private static final String setMarkerScript
             = "var myLatlng = new google.maps.LatLng(48.4431727,23.0488126);\n"
             + "var marker = new google.maps.Marker({\n"
@@ -41,8 +44,11 @@ public class MapMarker {
             + "    map: map,\n"
             + "    title: 'Hello World!'\n"
             + "});";
+
     private static int zoomValue = 4;
     private LatLong currentLatLong;
+    JFrame mf;
+    EcoSystem business;
 
     public static String setMarkerOnMap(String lat, String longitude, String name) {
         name = (name == null || name == "") ? "default" : name;
@@ -53,6 +59,7 @@ public class MapMarker {
                 + "    title: '"+name+"'\n"
                 + "});";
     }
+
 
     public MapMarker() {
 
@@ -78,19 +85,24 @@ public class MapMarker {
                     .addActionListener(e -> browser.mainFrame()
                     .ifPresent(frame -> {
                         this.currentLatLong = getLatLngFromGoogleMapsUrl(browser.url());
+
                         // CALL THIS FUNCTION TO GET LAT LNG
                         System.out.println(getCurrentBrowserLatLng());
+
                     }
                     ));
             JPanel toolBar = createToolBar(Arrays.asList(setMarkerButton, setAddressButton));
 
             createFrame(toolBar, view);
             browser.navigation().loadUrl("https://www.google.com/maps");
+
 //            browser
+
 
         });
         return this;
     }
+
 
     public void setMapMarkers(List<LatLong> coordinateList) {
         Browser browser = createBrowser();
@@ -115,6 +127,7 @@ public class MapMarker {
         });
     }
 
+
     public LatLong getLatLngFromGoogleMapsUrl(String googleMapsUrl) {
         Optional<String> latLongString = Arrays.asList(googleMapsUrl.split("/")).stream().filter(i -> i.startsWith("@")).findFirst();
         if (latLongString.isPresent()) {
@@ -126,15 +139,19 @@ public class MapMarker {
     }
 
     private void createFrame(Component toolBar, Component view) {
-        JFrame frame = new JFrame("Google Maps");
-        if (toolBar != null) {
-            frame.add(toolBar, BorderLayout.SOUTH);
-        }
-        if (view != null) {
-            frame.add(view, BorderLayout.CENTER);
-        }
-        frame.setSize(800, 500);
-        frame.setVisible(true);
+
+        mf = new JFrame("Google Maps");
+        mf.add(toolBar, BorderLayout.SOUTH);
+        mf.add(view, BorderLayout.CENTER);
+        mf.setSize(800, 500);
+        mf.setVisible(true);
+        mf.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+
+            }
+        });
+
     }
 
     private Browser createBrowser() {

@@ -5,19 +5,24 @@
  */
 package Business.Organization;
 
-import Business.Employee.Employee;
-import Business.Person;
+import Business.Address.Address;
 import Business.UserAccount.UserAccount;
+import Role.HospitalAdminRole;
 import java.util.List;
 
 /**
  *
- * @author kulbi
+ * @author Skanda
  */
-public class Doctor extends Employee{
-    CovidCareCenter careCenter;
+public class CovidCareCenter extends Organization{
+
     List<Patient> patientList;
-    String fullName;
-    UserAccount user;
+    UserAccount admin;
+    public CovidCareCenter(String name){
+        super(name);
+        this.role = new HospitalAdminRole();
+    }
+
+
     
 }
