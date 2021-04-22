@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  *
@@ -21,19 +22,22 @@ import java.util.Map;
 public class EcoSystem {
 
     private static EcoSystem business;
-    private Map<String,Network> networkMap;
+    private Map<String, Network> networkMap;
     UserAccountDirectory userDir;
     LatLong tempLocation;
+
     public static EcoSystem getInstance() {
         if (business == null) {
             business = new EcoSystem();
         }
         return business;
     }
+    Random rand;
 
     EcoSystem() {
         this.networkMap = new HashMap<>();
         userDir = new UserAccountDirectory();
+        this.rand = new Random();
     }
 
     public static EcoSystem getBusiness() {
@@ -43,8 +47,6 @@ public class EcoSystem {
     public static void setBusiness(EcoSystem business) {
         EcoSystem.business = business;
     }
-
-
 
     public UserAccountDirectory getUserDir() {
         return userDir;
@@ -68,6 +70,14 @@ public class EcoSystem {
 
     public void setTempLocation(LatLong tempLocation) {
         this.tempLocation = tempLocation;
+    }
+
+    public Random getRand() {
+        return rand;
+    }
+
+    public void setRand(Random rand) {
+        this.rand = rand;
     }
 
 }
