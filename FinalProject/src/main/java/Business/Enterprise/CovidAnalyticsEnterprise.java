@@ -10,7 +10,9 @@ package Business.Enterprise;
  * @author Skanda
  */
 public class CovidAnalyticsEnterprise extends Enterprise {
+    
     public CovidAnalyticsEnterprise(String name) {
         super(name, Enterprise.EnterpriseType.AnalyticsUnit);
+        
     }
 }

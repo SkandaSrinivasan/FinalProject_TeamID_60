@@ -5,10 +5,14 @@
  */
 package Business.Organization;
 
+import java.util.List;
+
 /**
  *
  * @author Skanda
  */
 public class OrganizationDirectory {
+    List<Organization> orgList;
+    
     
 }
