@@ -21,6 +21,7 @@ public class AppConfig {
     private static final String CONFIG_FILE_NAME = "map.properties";
     private static final Properties systemPropeties = new Properties();
     private static AppConfig singletonInstance;
+
     static {
         InputStream input;
         try {
@@ -32,7 +33,7 @@ public class AppConfig {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(AppConfig.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-            
+
         }
 
     }
@@ -51,8 +52,24 @@ public class AppConfig {
     public String getGMapsApiKey() {
         return systemPropeties.getProperty("API_KEY");
     }
-    
+
     public String getJXBrowserLicenseKey() {
         return systemPropeties.getProperty("LICENSE_KEY");
+    }
+
+    public String getSMTPEmailHost() {
+        return systemPropeties.getProperty("SMTP_HOST");
+    }
+
+    public String getSMTPEmailPort() {
+        return systemPropeties.getProperty("SMTP_PORT");
+    }
+
+    public String getSMTPFromEmail() {
+        return systemPropeties.getProperty("SMTP_FROM_USERNAME");
+    }
+
+    public String getSMTPFromEmailPassword() {
+        return systemPropeties.getProperty("SMTP_FROM_PASSWORD");
     }
 }
