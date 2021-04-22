@@ -12,6 +12,21 @@ package JxMaps.main.Modal;
 public class LatLong {
     private String latitude;
     private String longitude;
+    private String name;
+    
+    public LatLong(String name, String latitude, String longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public LatLong(String latitude, String longitude) {
         this.latitude = latitude;
@@ -36,8 +51,10 @@ public class LatLong {
 
     @Override
     public String toString() {
-        return "LatLong{" + "latitude=" + latitude + ", longitude=" + longitude + '}';
+        return "LatLong{" + "latitude=" + latitude + ", longitude=" + longitude + ", name=" + name + '}';
     }
+
+
     
     
 }
