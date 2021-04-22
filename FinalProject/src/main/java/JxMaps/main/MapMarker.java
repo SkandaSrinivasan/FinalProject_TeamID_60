@@ -13,6 +13,7 @@ import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
+import com.teamdev.jxbrowser.navigation.event.NavigationFinished;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -33,22 +34,30 @@ public class MapMarker {
 
     private static final int MIN_ZOOM = 0;
     private static final int MAX_ZOOM = 21;
-    private static String setMarkerScript= "";
+    private static final String setMarkerScript
+            = "var myLatlng = new google.maps.LatLng(48.4431727,23.0488126);\n"
+            + "var marker = new google.maps.Marker({\n"
+            + "    position: myLatlng,\n"
+            + "    map: map,\n"
+            + "    title: 'Hello World!'\n"
+            + "});";
     private static int zoomValue = 4;
     private LatLong currentLatLong;
 
-    public static String setMarkerOnMap(String lat, String longitude) {
+    public static String setMarkerOnMap(String lat, String longitude, String name) {
+        name = (name == null || name == "") ? "default" : name;
         return "var myLatlng = new google.maps.LatLng(" + lat + "," + longitude + ");\n"
                 + "var marker = new google.maps.Marker({\n"
                 + "    position: myLatlng,\n"
                 + "    map: map,\n"
-                + "    title: 'Hello World!'\n"
+                + "    title: '"+name+"'\n"
                 + "});";
     }
 
     public MapMarker() {
+
     }
-    
+
     public LatLong getCurrentBrowserLatLng() {
         return this.currentLatLong;
     }
@@ -59,11 +68,6 @@ public class MapMarker {
 
         SwingUtilities.invokeLater(() -> {
             BrowserView view = BrowserView.newInstance(browser);
-//            ZipCodeResolver zipCodeResolver = new ZipCodeResolver();
-//            UsZipCode zipDetails = zipCodeResolver.getDetailsForUsZipCode(zipCode);
-//            System.out.println(zipDetails);
-//            setMarkerScript = setMarkerOnMap(zipDetails.getLatitude(), zipDetails.getLongitude());
-//            ################################################
 
             JButton setMarkerButton = new JButton("Set Marker");
             JButton setAddressButton = new JButton("Save Place");
@@ -72,39 +76,65 @@ public class MapMarker {
                             -> frame.executeJavaScript(setMarkerScript)));
             setAddressButton
                     .addActionListener(e -> browser.mainFrame()
-                            .ifPresent(frame -> {
-                                this.currentLatLong = getLatLngFromGoogleMapsUrl(browser.url());
-                                // CALL THIS FUNCTION TO GET LAT LNG
-                                System.out.println(getCurrentBrowserLatLng());
+                    .ifPresent(frame -> {
+                        this.currentLatLong = getLatLngFromGoogleMapsUrl(browser.url());
+                        // CALL THIS FUNCTION TO GET LAT LNG
+                        System.out.println(getCurrentBrowserLatLng());
                     }
-            ));
+                    ));
             JPanel toolBar = createToolBar(Arrays.asList(setMarkerButton, setAddressButton));
 
             createFrame(toolBar, view);
             browser.navigation().loadUrl("https://www.google.com/maps");
 //            browser
-//            browser.navigation().loadUrl("file:///" + Paths.get(".").toAbsolutePath().toString()
-//                    + "/src/main/java/JxMaps/main/Web/map.html");
+
         });
         return this;
     }
-    
+
+    public void setMapMarkers(List<LatLong> coordinateList) {
+        Browser browser = createBrowser();
+        SwingUtilities.invokeLater(() -> {
+            BrowserView view = BrowserView.newInstance(browser);
+
+            JButton setMarkerButton = new JButton("Set Marker");
+            JButton setAddressButton = new JButton("Save Place");
+
+            JPanel toolBar = createToolBar(Arrays.asList(setMarkerButton, setAddressButton));
+
+            createFrame(toolBar, view);
+            browser.navigation().loadUrl("file:///" + Paths.get(".").toAbsolutePath().toString()
+                    + "/src/main/java/JxMaps/main/Web/map.html");
+            browser.navigation().on(NavigationFinished.class, event -> {
+                for (LatLong coord : coordinateList) {
+                    browser.mainFrame().ifPresent(f
+                            -> f.executeJavaScript(setMarkerOnMap(coord.getLatitude(), coord.getLongitude(), coord.getName())));
+                }
+
+            });
+        });
+    }
+
     public LatLong getLatLngFromGoogleMapsUrl(String googleMapsUrl) {
-        Optional<String> latLongString =  Arrays.asList(googleMapsUrl.split("/")).stream().filter(i -> i.startsWith("@")).findFirst();
-        if(latLongString.isPresent()) {
+        Optional<String> latLongString = Arrays.asList(googleMapsUrl.split("/")).stream().filter(i -> i.startsWith("@")).findFirst();
+        if (latLongString.isPresent()) {
             String latLng = latLongString.get().substring(1);
             String[] latLngArr = latLng.split(",");
             return new LatLong(latLngArr[0], latLngArr[1]);
         }
         return new LatLong("40", "40");
     }
-    
+
     private void createFrame(Component toolBar, Component view) {
-             JFrame frame = new JFrame("Google Maps");
+        JFrame frame = new JFrame("Google Maps");
+        if (toolBar != null) {
             frame.add(toolBar, BorderLayout.SOUTH);
+        }
+        if (view != null) {
             frame.add(view, BorderLayout.CENTER);
-            frame.setSize(800, 500);
-            frame.setVisible(true);
+        }
+        frame.setSize(800, 500);
+        frame.setVisible(true);
     }
 
     private Browser createBrowser() {
@@ -114,7 +144,7 @@ public class MapMarker {
                         .build();
         return Engine.newInstance(options).newBrowser();
     }
-    
+
     private JPanel createToolBar(List<JButton> buttons) {
         JPanel jpanel = new JPanel();
         buttons.forEach(button -> {
