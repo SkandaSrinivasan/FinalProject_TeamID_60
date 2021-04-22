@@ -22,5 +22,21 @@ public class CovidCareEnterprise extends Enterprise{
         this.hospitals = new ArrayList<>();
         this.pharmacies = new ArrayList<>();
     }
+
+    public List<CovidCareCenter> getHospitals() {
+        return hospitals;
+    }
+
+    public void setHospitals(List<CovidCareCenter> hospitals) {
+        this.hospitals = hospitals;
+    }
+
+    public List<PharmacyOrganization> getPharmacies() {
+        return pharmacies;
+    }
+
+    public void setPharmacies(List<PharmacyOrganization> pharmacies) {
+        this.pharmacies = pharmacies;
+    }
     
 }

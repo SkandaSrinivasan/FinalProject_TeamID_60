@@ -9,13 +9,20 @@ import Business.Address.Address;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
+import Business.Organization.ContactTracingOrganization;
 import UI.HospitalPanel;
 import Business.Organization.CovidCareCenter;
+import Business.Organization.Organization;
+import Business.Organization.PharmacyOrganization;
+import Business.Organization.VaccineSiteOrganization;
+import Business.Organization.VaccineSupplierOrganization;
+import Business.Organization.VolunteerContactTracingOrganization;
 import JxMaps.main.MapMarker;
 import JxMaps.main.Modal.LatLong;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -57,6 +64,8 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        orgTable = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -106,16 +115,33 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             }
         });
 
+        orgTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Organization Name", "Network", "Location"
+            }
+        ));
+        jScrollPane1.setViewportView(orgTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGap(208, 208, 208)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -157,10 +183,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtOrgName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
@@ -169,6 +196,24 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateTable(){
+        DefaultTableModel model = (DefaultTableModel) orgTable.getModel();
+        model.setRowCount(0);
+        for (Network n: system.getNetworkMap().values()) {
+            for(Organization s:n.getCovidCare().getOrganizationDirectory().getOrgList()){
+                model.addRow(new Object[]{s.getName(),n.getName(),s.getLocation()});  
+            }  
+            for(Organization s:n.getContactTracing().getOrganizationDirectory().getOrgList()){
+                model.addRow(new Object[]{s.getName(),n.getName(),s.getLocation()});  
+            }  
+            for(Organization s:n.getVaxCenter().getOrganizationDirectory().getOrgList()){
+                model.addRow(new Object[]{s.getName(),n.getName(),s.getLocation()});  
+            } 
+            for(Organization s:n.getAnalyticCenter().getOrganizationDirectory().getOrgList()){
+                model.addRow(new Object[]{s.getName(),n.getName(),s.getLocation()});  
+            }
+        }
+    }
     private void entBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entBoxActionPerformed
         // TODO add your handling code here:
 
@@ -186,9 +231,6 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 orgBox.removeAll();
                 orgBox.addItem("Vaccination Site");
                 orgBox.addItem("Vaccine Supplier");
-            } else if (enter.equalsIgnoreCase("Covid Analytics")) {
-                orgBox.removeAll();
-                orgBox.addItem("State/Network Analytics Centre");
             }
         }
     }//GEN-LAST:event_entBoxActionPerformed
@@ -200,12 +242,41 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if (!orgBox.getSelectedItem().toString().equals("")) {
+            LatLong location = system.getTempLocation();
             Network net = system.getNetworkMap().get(networkBox.getSelectedItem().toString());
             String org = orgBox.getSelectedItem().toString();
             if (org.equalsIgnoreCase("Covid Care Centre")) {
                 CovidCareCenter hosp = new CovidCareCenter(txtOrgName.getText());
-                
+                hosp.setLocation(location);
+                net.getCovidCare().getHospitals().add(hosp);
+                net.getCovidCare().getOrganizationDirectory().getOrgList().add(hosp);
+            } else if (org.equalsIgnoreCase("Pharmacy")) {
+                PharmacyOrganization pharm = new PharmacyOrganization(txtOrgName.getText());
+                net.getCovidCare().getPharmacies().add(pharm);
+                pharm.setLocation(location);
+                net.getCovidCare().getOrganizationDirectory().getOrgList().add(pharm);
+            } else if (org.equals("State Contact Tracing")) {
+                ContactTracingOrganization traceOrg = new ContactTracingOrganization(txtOrgName.getText());
+                traceOrg.setLocation(location);
+                net.getContactTracing().getContactOrg().add(traceOrg);
+                net.getContactTracing().getOrganizationDirectory().getOrgList().add(traceOrg);
+            } else if (org.equals("Volunteer Contact Tracing")) {
+                VolunteerContactTracingOrganization volOrg = new VolunteerContactTracingOrganization(txtOrgName.getText());
+                volOrg.setLocation(location);
+                net.getContactTracing().getVolunteerOrg().add(volOrg);
+                net.getContactTracing().getOrganizationDirectory().getOrgList().add(volOrg);
+            } else if (org.equals("Vaccination Site")) {
+                VaccineSiteOrganization volOrg = new VaccineSiteOrganization(txtOrgName.getText());
+                volOrg.setLocation(location);
+                net.getVaxCenter().getVaxSites().add(volOrg);
+                 net.getVaxCenter().getOrganizationDirectory().getOrgList().add(volOrg);
+            } else if (org.equals("Vaccine Supplier")) {
+                VaccineSupplierOrganization volOrg = new VaccineSupplierOrganization(txtOrgName.getText());
+                volOrg.setLocation(location);
+                net.getVaxCenter().getSuppliers().add(volOrg);
+                net.getVaxCenter().getOrganizationDirectory().getOrgList().add(volOrg);
             }
+            populateTable();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a organization to add", "Create fail", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -213,11 +284,9 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        MapMarker map = new MapMarker();
+        MapMarker map = new MapMarker(system);
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -229,8 +298,10 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> networkBox;
     private javax.swing.JComboBox<String> orgBox;
+    private javax.swing.JTable orgTable;
     private javax.swing.JTextField txtOrgName;
     // End of variables declaration//GEN-END:variables
 }

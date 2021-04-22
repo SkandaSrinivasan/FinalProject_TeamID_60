@@ -22,4 +22,21 @@ public class VaccinationCenterEnterprise extends Enterprise {
         this.vaxSites = new ArrayList<>();
         this.suppliers = new ArrayList<>();
     }
+
+    public List<VaccineSiteOrganization> getVaxSites() {
+        return vaxSites;
+    }
+
+    public void setVaxSites(List<VaccineSiteOrganization> vaxSites) {
+        this.vaxSites = vaxSites;
+    }
+
+    public List<VaccineSupplierOrganization> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<VaccineSupplierOrganization> suppliers) {
+        this.suppliers = suppliers;
+    }
+    
 }

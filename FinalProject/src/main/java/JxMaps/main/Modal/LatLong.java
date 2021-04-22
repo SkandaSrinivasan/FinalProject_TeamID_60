@@ -36,7 +36,7 @@ public class LatLong {
 
     @Override
     public String toString() {
-        return "LatLong{" + "latitude=" + latitude + ", longitude=" + longitude + '}';
+        return latitude+longitude;
     }
     
     

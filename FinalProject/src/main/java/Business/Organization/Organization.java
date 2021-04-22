@@ -10,6 +10,7 @@ import Business.Coordinates.Coordinates;
 import Business.Employee.EmployeeDirectory;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
+import JxMaps.main.Modal.LatLong;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +24,7 @@ public class Organization {
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
-
+    LatLong location;
     private static int counter=0;
     Address address;
     
@@ -109,6 +110,14 @@ public class Organization {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public LatLong getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLong location) {
+        this.location = location;
     }
 
 

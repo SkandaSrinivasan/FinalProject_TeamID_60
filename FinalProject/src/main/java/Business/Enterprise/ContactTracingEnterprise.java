@@ -22,4 +22,21 @@ public class ContactTracingEnterprise extends Enterprise {
         this.contactOrg = new ArrayList<>();
         this.volunteerOrg = new ArrayList<>();
     }
+
+    public List<ContactTracingOrganization> getContactOrg() {
+        return contactOrg;
+    }
+
+    public void setContactOrg(List<ContactTracingOrganization> contactOrg) {
+        this.contactOrg = contactOrg;
+    }
+
+    public List<VolunteerContactTracingOrganization> getVolunteerOrg() {
+        return volunteerOrg;
+    }
+
+    public void setVolunteerOrg(List<VolunteerContactTracingOrganization> volunteerOrg) {
+        this.volunteerOrg = volunteerOrg;
+    }
+    
 }

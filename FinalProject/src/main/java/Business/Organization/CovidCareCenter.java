@@ -12,12 +12,12 @@ import java.util.List;
  *
  * @author Skanda
  */
-public class CovidCareCenter {
+public class CovidCareCenter extends Organization{
     String name;
     Address address;
     List<Patient> patientList;
     public CovidCareCenter(String name){
-        this.name = name;
+        super(name);
     }
 
     public String getName() {

@@ -9,6 +9,10 @@ package Business.Organization;
  *
  * @author kulbi
  */
-public class VaccineSupplierOrganization {
+public class VaccineSupplierOrganization extends Organization {
+    
+    public VaccineSupplierOrganization(String name) {
+        super(name);
+    }
     
 }

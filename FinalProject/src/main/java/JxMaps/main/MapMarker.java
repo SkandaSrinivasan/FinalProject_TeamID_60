@@ -5,6 +5,7 @@
  */
 package JxMaps.main;
 
+import Business.EcoSystem;
 import JxMaps.main.AppConfig;
 import JxMaps.main.Modal.LatLong;
 import JxMaps.main.Modal.UsZipCode;
@@ -38,6 +39,7 @@ public class MapMarker {
     private static int zoomValue = 4;
     private LatLong currentLatLong;
     JFrame mf;
+    EcoSystem business;
 
     public static String setMarkerOnMap(String lat, String longitude) {
         return "var myLatlng = new google.maps.LatLng(" + lat + "," + longitude + ");\n"
@@ -48,7 +50,7 @@ public class MapMarker {
                 + "});";
     }
 
-    public MapMarker() {
+    public MapMarker(EcoSystem business) {
         Browser browser = createBrowser();
 
         SwingUtilities.invokeLater(() -> {
@@ -81,7 +83,7 @@ public class MapMarker {
 //            browser.navigation().loadUrl("file:///" + Paths.get(".").toAbsolutePath().toString()
 //                    + "/src/main/java/JxMaps/main/Web/map.html");
         });
-
+        this.business = business;
     }
 
     public LatLong getCurrentBrowserLatLng() {
@@ -111,6 +113,7 @@ public class MapMarker {
                         this.currentLatLong = getLatLngFromGoogleMapsUrl(browser.url());
 
                         // CALL THIS FUNCTION TO GET LAT LNG
+                        business.setTempLocation(getCurrentBrowserLatLng());
                         System.out.println(getCurrentBrowserLatLng());
                         
                     }

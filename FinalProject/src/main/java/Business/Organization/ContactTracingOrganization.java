@@ -9,6 +9,9 @@ package Business.Organization;
  *
  * @author kulbi
  */
-public class ContactTracingOrganization {
-    
+public class ContactTracingOrganization extends Organization {
+
+    public ContactTracingOrganization(String name) {
+        super(name);
+    }
 }

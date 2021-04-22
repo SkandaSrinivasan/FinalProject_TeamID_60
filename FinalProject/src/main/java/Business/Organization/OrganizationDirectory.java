@@ -13,6 +13,21 @@ import java.util.List;
  */
 public class OrganizationDirectory {
     List<Organization> orgList;
+
+    public List<Organization> getOrgList() {
+        return orgList;
+    }
+
+    public void setOrgList(List<Organization> orgList) {
+        this.orgList = orgList;
+    }
     
-    
+    public Organization getOrganization(String name){
+        for(Organization org:this.orgList){
+            if(org.getName().equals(name)){
+                return org;
+            }
+        }
+        return null;
+    }
 }

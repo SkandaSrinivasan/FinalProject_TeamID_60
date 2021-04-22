@@ -9,10 +9,10 @@ package Business.Organization;
  *
  * @author Skanda
  */
-public class VolunteerContactTracingOrganization extends Organization {
-    String name;
+public class CovidAnalyticsOrganization extends Organization {
     
-    public VolunteerContactTracingOrganization(String name){
+    public CovidAnalyticsOrganization(String name) {
         super(name);
     }
+    
 }
