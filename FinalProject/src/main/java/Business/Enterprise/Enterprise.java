@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -12,8 +12,8 @@ import Business.Organization.OrganizationDirectory;
  *
  * @author Skanda
  */
-public abstract class Enterprise extends Organization{
-    
+public abstract class Enterprise extends Organization {
+
     private EnterpriseType enterpriseType;
     private OrganizationDirectory organizationDirectory;
     private Organization organization;
@@ -22,22 +22,27 @@ public abstract class Enterprise extends Organization{
         return organizationDirectory;
     }
 
+    public void setOrganizationDirectory(OrganizationDirectory organizationDirectory) {
+        this.organizationDirectory = organizationDirectory;
+    }
 
-    public enum EnterpriseType{
-        CovidCareUnit("CovidCareUnit"), VaccinationUnit("Vaccination Unit"), ContactTracingUnit("Contact Tracing Unit"),AnalyticsUnit("Analytics Unit"); 
-        
+    public enum EnterpriseType {
+        CovidCareUnit("CovidCareUnit"), VaccinationUnit("Vaccination Unit"), ContactTracingUnit("Contact Tracing Unit"), AnalyticsUnit("Analytics Unit");
+
         private String value;
-        
-        private EnterpriseType(String value){
-            this.value=value;
+
+        private EnterpriseType(String value) {
+            this.value = value;
         }
+
         public String getValue() {
             return value;
         }
+
         @Override
-        public String toString(){
-        return value;
-    }
+        public String toString() {
+            return value;
+        }
     }
 
     public EnterpriseType getEnterpriseType() {
@@ -47,11 +52,11 @@ public abstract class Enterprise extends Organization{
     public void setEnterpriseType(EnterpriseType enterpriseType) {
         this.enterpriseType = enterpriseType;
     }
-    
-    public Enterprise(String name,EnterpriseType type){
+
+    public Enterprise(String name, EnterpriseType type) {
         super(name);
-        this.enterpriseType=type;
-        organizationDirectory=new OrganizationDirectory();
+        this.enterpriseType = type;
+        organizationDirectory = new OrganizationDirectory();
     }
 
     public Organization getOrganization() {
@@ -61,5 +66,5 @@ public abstract class Enterprise extends Organization{
     public void setOrganization(Organization organization) {
         this.organization = organization;
     }
-    
+
 }

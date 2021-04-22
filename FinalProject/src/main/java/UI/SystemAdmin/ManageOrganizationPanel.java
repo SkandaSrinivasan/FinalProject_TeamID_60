@@ -42,6 +42,8 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         for (String s : system.getNetworkMap().keySet()) {
             networkBox.addItem(s);
         }
+        populateTable();
+        populateOrgBox();
     }
 
     /**
@@ -214,10 +216,9 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             }
         }
     }
-    private void entBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entBoxActionPerformed
-        // TODO add your handling code here:
-
-        if (!entBox.getSelectedItem().toString().equals("")) {
+    public void populateOrgBox(){
+        orgBox.removeAll();
+         if (!entBox.getSelectedItem().toString().equals("")) {
             String enter = entBox.getSelectedItem().toString();
             if (enter.equalsIgnoreCase("Covid Care")) {
                 orgBox.removeAll();
@@ -233,6 +234,13 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 orgBox.addItem("Vaccine Supplier");
             }
         }
+    }
+    private void entBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entBoxActionPerformed
+        // TODO add your handling code here:
+        orgBox.removeAllItems();
+        populateOrgBox();
+
+       
     }//GEN-LAST:event_entBoxActionPerformed
 
     private void orgBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgBoxActionPerformed
@@ -243,17 +251,22 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (!orgBox.getSelectedItem().toString().equals("")) {
             LatLong location = system.getTempLocation();
+            if(location == null){
+                JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            System.out.println("MY location"+location.toString());
             Network net = system.getNetworkMap().get(networkBox.getSelectedItem().toString());
             String org = orgBox.getSelectedItem().toString();
-            if (org.equalsIgnoreCase("Covid Care Centre")) {
+            if (org.equalsIgnoreCase("Covid Care Center")) {
                 CovidCareCenter hosp = new CovidCareCenter(txtOrgName.getText());
                 hosp.setLocation(location);
                 net.getCovidCare().getHospitals().add(hosp);
                 net.getCovidCare().getOrganizationDirectory().getOrgList().add(hosp);
             } else if (org.equalsIgnoreCase("Pharmacy")) {
                 PharmacyOrganization pharm = new PharmacyOrganization(txtOrgName.getText());
-                net.getCovidCare().getPharmacies().add(pharm);
                 pharm.setLocation(location);
+                net.getCovidCare().getPharmacies().add(pharm);        
                 net.getCovidCare().getOrganizationDirectory().getOrgList().add(pharm);
             } else if (org.equals("State Contact Tracing")) {
                 ContactTracingOrganization traceOrg = new ContactTracingOrganization(txtOrgName.getText());
@@ -269,7 +282,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 VaccineSiteOrganization volOrg = new VaccineSiteOrganization(txtOrgName.getText());
                 volOrg.setLocation(location);
                 net.getVaxCenter().getVaxSites().add(volOrg);
-                 net.getVaxCenter().getOrganizationDirectory().getOrgList().add(volOrg);
+                net.getVaxCenter().getOrganizationDirectory().getOrgList().add(volOrg);
             } else if (org.equals("Vaccine Supplier")) {
                 VaccineSupplierOrganization volOrg = new VaccineSupplierOrganization(txtOrgName.getText());
                 volOrg.setLocation(location);
@@ -278,7 +291,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             }
             populateTable();
         } else {
-            JOptionPane.showMessageDialog(this, "Please select a organization to add", "Create fail", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a organization Type to add", "Create fail", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

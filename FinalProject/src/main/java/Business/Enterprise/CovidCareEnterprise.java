@@ -6,6 +6,7 @@
 package Business.Enterprise;
 
 import Business.Organization.CovidCareCenter;
+import Business.Organization.OrganizationDirectory;
 import Business.Organization.PharmacyOrganization;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class CovidCareEnterprise extends Enterprise{
         super(name, Enterprise.EnterpriseType.CovidCareUnit);
         this.hospitals = new ArrayList<>();
         this.pharmacies = new ArrayList<>();
+        this.setOrganizationDirectory(new OrganizationDirectory());
     }
 
     public List<CovidCareCenter> getHospitals() {

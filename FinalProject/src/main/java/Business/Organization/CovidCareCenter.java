@@ -6,6 +6,8 @@
 package Business.Organization;
 
 import Business.Address.Address;
+import Business.UserAccount.UserAccount;
+import Role.HospitalAdminRole;
 import java.util.List;
 
 /**
@@ -13,27 +15,14 @@ import java.util.List;
  * @author Skanda
  */
 public class CovidCareCenter extends Organization{
-    String name;
-    Address address;
+
     List<Patient> patientList;
+    UserAccount admin;
     public CovidCareCenter(String name){
         super(name);
+        this.role = new HospitalAdminRole();
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
     
 }

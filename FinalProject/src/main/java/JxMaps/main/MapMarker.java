@@ -72,6 +72,7 @@ public class MapMarker {
                         this.currentLatLong = getLatLngFromGoogleMapsUrl(browser.url());
 
                         // CALL THIS FUNCTION TO GET LAT LNG
+                        business.setTempLocation(getCurrentBrowserLatLng());
                         System.out.println(getCurrentBrowserLatLng());
                     }
                     ));

@@ -8,9 +8,12 @@ package Business.Network;
 import Business.Enterprise.ContactTracingEnterprise;
 import Business.Enterprise.CovidAnalyticsEnterprise;
 import Business.Enterprise.CovidCareEnterprise;
+import Business.Enterprise.Enterprise;
 import Business.Enterprise.EnterpriseDirectory;
 import Business.Enterprise.VaccinationCenterEnterprise;
 import Business.Organization.Organization;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,6 +24,7 @@ public class Network {
     ContactTracingEnterprise contactTracing;
     VaccinationCenterEnterprise vaxCenter;
     CovidAnalyticsEnterprise analyticCenter;
+    List<Enterprise> enterpriseList;
     String name;
     
     public Network(String name){
@@ -28,7 +32,12 @@ public class Network {
         this.covidCare = new CovidCareEnterprise("Covid Care Enterprise");
         this.contactTracing = new ContactTracingEnterprise("Contact Tracing Enterprise");
         this.vaxCenter = new VaccinationCenterEnterprise("Vaccination Center Enterprise");
-        this.analyticCenter = new CovidAnalyticsEnterprise("Covid Analytics Enterprise");
+        this.analyticCenter = new CovidAnalyticsEnterprise("Covid Analytics Enterprise");       
+        this.enterpriseList = new ArrayList<>();
+        enterpriseList.add(covidCare);
+        enterpriseList.add(vaxCenter);
+        enterpriseList.add(analyticCenter);
+        enterpriseList.add(contactTracing);
     }
 
 
@@ -70,6 +79,14 @@ public class Network {
 
     public void setAnalyticCenter(CovidAnalyticsEnterprise analyticCenter) {
         this.analyticCenter = analyticCenter;
+    }
+
+    public List<Enterprise> getEnterpriseList() {
+        return enterpriseList;
+    }
+
+    public void setEnterpriseList(List<Enterprise> enterpriseList) {
+        this.enterpriseList = enterpriseList;
     }
     
 }

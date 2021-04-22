@@ -8,9 +8,11 @@ package Business.Organization;
 import Business.Address.Address;
 import Business.Coordinates.Coordinates;
 import Business.Employee.EmployeeDirectory;
+import Business.UserAccount.UserAccount;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
 import JxMaps.main.Modal.LatLong;
+import Role.Role;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +29,8 @@ public class Organization {
     LatLong location;
     private static int counter=0;
     Address address;
-    
+    Role role;
+    UserAccount user;
     public enum Type{
         RestaurantAdmin("RestaurantAdmin"),
         Customer("Customer"),
@@ -120,6 +123,17 @@ public class Organization {
         this.location = location;
     }
 
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+@Override
+    public String toString() {
+        return this.name;
+    }
 
 }

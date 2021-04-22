@@ -5,6 +5,7 @@
  */
 package Business.Enterprise;
 
+import Business.Organization.OrganizationDirectory;
 import Business.Organization.VaccineSiteOrganization;
 import Business.Organization.VaccineSupplierOrganization;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class VaccinationCenterEnterprise extends Enterprise {
         super(name, Enterprise.EnterpriseType.VaccinationUnit);
         this.vaxSites = new ArrayList<>();
         this.suppliers = new ArrayList<>();
+        this.setOrganizationDirectory(new OrganizationDirectory());
     }
 
     public List<VaccineSiteOrganization> getVaxSites() {

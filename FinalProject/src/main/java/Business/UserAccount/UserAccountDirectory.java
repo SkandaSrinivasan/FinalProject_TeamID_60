@@ -49,5 +49,13 @@ public class UserAccountDirectory {
         }
         return null;
     }
+
+    public List<UserAccount> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserAccount> users) {
+        this.users = users;
+    }
     
 }

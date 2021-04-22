@@ -6,6 +6,7 @@
 package Business.Enterprise;
 
 import Business.Organization.ContactTracingOrganization;
+import Business.Organization.OrganizationDirectory;
 import Business.Organization.VolunteerContactTracingOrganization;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ContactTracingEnterprise extends Enterprise {
         super(name, Enterprise.EnterpriseType.ContactTracingUnit);
         this.contactOrg = new ArrayList<>();
         this.volunteerOrg = new ArrayList<>();
+        this.setOrganizationDirectory(new OrganizationDirectory());
     }
 
     public List<ContactTracingOrganization> getContactOrg() {

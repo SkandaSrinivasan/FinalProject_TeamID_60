@@ -5,6 +5,7 @@
  */
 package Business.Organization;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,9 @@ import java.util.List;
 public class OrganizationDirectory {
     List<Organization> orgList;
 
+    public OrganizationDirectory(){
+        this.orgList = new ArrayList<>();
+    }
     public List<Organization> getOrgList() {
         return orgList;
     }
