@@ -31,9 +31,10 @@ public class Organization {
     Address address;
     Role role;
     UserAccount user;
+    Type type;
     public enum Type{
-        RestaurantAdmin("RestaurantAdmin"),
-        Customer("Customer"),
+        CovidCareCenter("Covid Care Center"),
+        Pharmacy("Pharmacy"),
         DeliveryMan("Delivery"),
         SysAdmin("Sysadmin");
 
@@ -134,6 +135,22 @@ public class Organization {
 @Override
     public String toString() {
         return this.name;
+    }
+
+    public UserAccount getUser() {
+        return user;
+    }
+
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
 }

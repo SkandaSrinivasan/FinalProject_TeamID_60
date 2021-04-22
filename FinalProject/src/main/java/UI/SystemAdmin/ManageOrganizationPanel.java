@@ -297,8 +297,8 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        MapMarker map = new MapMarker(system);
-        
+        MapMarker map = new MapMarker();
+        map.saveMapMarker(system);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

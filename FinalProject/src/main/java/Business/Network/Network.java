@@ -88,5 +88,9 @@ public class Network {
     public void setEnterpriseList(List<Enterprise> enterpriseList) {
         this.enterpriseList = enterpriseList;
     }
+    @Override
+    public String toString() {
+        return this.name;
+    }
     
 }

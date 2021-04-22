@@ -7,6 +7,8 @@ package Business.Organization;
 
 import Business.Person;
 import Business.UserAccount.UserAccount;
+import Role.PatientRole;
+import Role.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +17,19 @@ import java.util.List;
  * @author Skanda
  */
 public class Patient extends Person {
-    String patientId;
+    static int id = 1;
     String insuranceNumber;
     UserAccount user;
     List<CovidTest> tests;
+    int patientId;
+    Role role;
 
     public Patient(String name) {
         super(name);
         this.tests = new ArrayList<>();
+        this.patientId = id;
+        id+=1;
+        this.role = new PatientRole();
     }
     
     
