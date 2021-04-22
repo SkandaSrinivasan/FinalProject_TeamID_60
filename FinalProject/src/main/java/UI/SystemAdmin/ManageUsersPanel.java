@@ -209,6 +209,7 @@ public class ManageUsersPanel extends javax.swing.JPanel {
         else{
             UserAccount account = new UserAccount(txtUser.getText(), txtPass.getText(), org.getRole());
             org.getUserAccountDirectory().getUsers().add(account);
+            org.setUser(account);
             business.getUserDir().getUsers().add(account);
             JOptionPane.showMessageDialog(this, "User Created", "Create Success", JOptionPane.INFORMATION_MESSAGE);
         }

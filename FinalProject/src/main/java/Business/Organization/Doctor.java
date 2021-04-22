@@ -19,5 +19,38 @@ public class Doctor extends Employee{
     List<Patient> patientList;
     String fullName;
     UserAccount user;
+
+    public CovidCareCenter getCareCenter() {
+        return careCenter;
+    }
+
+    public void setCareCenter(CovidCareCenter careCenter) {
+        this.careCenter = careCenter;
+    }
+
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
+
+    public void setPatientList(List<Patient> patientList) {
+        this.patientList = patientList;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public UserAccount getUser() {
+        return user;
+    }
+
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
+    
     
 }

@@ -69,7 +69,7 @@ public class MapMarker {
         return this.currentLatLong;
     }
 
-    public MapMarker saveMapMarker() {
+    public MapMarker saveMapMarker(EcoSystem system) {
 
         Browser browser = createBrowser();
 
@@ -88,6 +88,7 @@ public class MapMarker {
 
                         // CALL THIS FUNCTION TO GET LAT LNG
                         System.out.println(getCurrentBrowserLatLng());
+                        system.setTempLocation(getCurrentBrowserLatLng());
 
                     }
                     ));
