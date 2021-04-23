@@ -19,6 +19,7 @@ public class CovidCareCenter extends Organization{
     
     List<Doctor> doctorList;
     List<Patient> patientList;
+    List<CovidTest> covidTests;
     UserAccount admin;
     public CovidCareCenter(String name){
         super(name);
@@ -26,6 +27,7 @@ public class CovidCareCenter extends Organization{
         this.type = Organization.Type.CovidCareCenter;
         this.doctorList = new ArrayList<>();
         this.patientList = new ArrayList<>();
+        this.covidTests = new ArrayList<>();
     }
 
     public List<Doctor> getDoctorList() {

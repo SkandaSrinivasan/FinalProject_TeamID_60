@@ -126,14 +126,21 @@ public class PatientPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        PrescriptionPanel panel = new PrescriptionPanel(system, account);
+        jSplitPane1.setRightComponent(panel);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        CovidTestPanel panel = new CovidTestPanel(system, account);
+        jSplitPane1.setRightComponent(panel);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        VaccineAppointment panel = new VaccineAppointment(system);
+        jSplitPane1.setRightComponent(panel);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnCareApptmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCareApptmtActionPerformed

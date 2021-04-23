@@ -29,6 +29,7 @@ public class Patient extends Person {
     LatLong location;
     List<Prescription> prescriptions;
     boolean activeAppointment;
+    boolean vaxAppointment;
     Date appointmentDate;
     String appointmentStatus;
     public Patient(String name,double id) {
@@ -128,6 +129,14 @@ public class Patient extends Person {
 
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
+    }
+
+    public boolean isVaxAppointment() {
+        return vaxAppointment;
+    }
+
+    public void setVaxAppointment(boolean vaxAppointment) {
+        this.vaxAppointment = vaxAppointment;
     }
     
     
