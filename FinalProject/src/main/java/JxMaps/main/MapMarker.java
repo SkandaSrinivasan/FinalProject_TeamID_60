@@ -131,7 +131,8 @@ public class MapMarker {
                 try {
                     LatLong clickedLatLong = new LatLong((String) jsObject.property("lat").get(), (String) jsObject.property("lng").get());
                     if (system != null) {
-                        system.setTempLocation(getCurrentBrowserLatLng());
+                        system.setTempLocation(clickedLatLong);
+                        mf.dispose();
                     }
                     System.out.println(clickedLatLong);
                 } catch (NoSuchElementException ex) {

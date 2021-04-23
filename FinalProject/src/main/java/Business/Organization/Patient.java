@@ -6,6 +6,7 @@
 package Business.Organization;
 
 import Business.Components.Prescription;
+import Business.Network.Network;
 import Business.Person;
 import Business.UserAccount.UserAccount;
 import JxMaps.main.Modal.LatLong;
@@ -20,11 +21,12 @@ import java.util.List;
  * @author Skanda
  */
 public class Patient extends Person {
-    double id=0;
+
+    double id = 0;
     String insuranceNumber;
     UserAccount user;
     List<CovidTest> tests;
-    int patientId;
+    String patientId;
     Role role;
     LatLong location;
     List<Prescription> prescriptions;
@@ -32,14 +34,18 @@ public class Patient extends Person {
     boolean vaxAppointment;
     Date appointmentDate;
     String appointmentStatus;
-    public Patient(String name,double id) {
+    Network network;
+    String covidStatus;
+    public Patient(String name, String id,Network network) {
         super(name);
         this.tests = new ArrayList<>();
-        this.id = id;
+        this.patientId = id;
         this.role = new PatientRole();
         this.prescriptions = new ArrayList<>();
         this.activeAppointment = false;
         this.appointmentStatus = "No Current appointment";
+        this.network = network;
+        this.covidStatus = "Negative";
     }
 
     public double getId() {
@@ -50,7 +56,6 @@ public class Patient extends Person {
         this.id = id;
     }
 
- 
     public String getInsuranceNumber() {
         return insuranceNumber;
     }
@@ -75,11 +80,11 @@ public class Patient extends Person {
         this.tests = tests;
     }
 
-    public int getPatientId() {
+    public String getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(String patientId) {
         this.patientId = patientId;
     }
 
@@ -138,6 +143,26 @@ public class Patient extends Person {
     public void setVaxAppointment(boolean vaxAppointment) {
         this.vaxAppointment = vaxAppointment;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
+    }
+
+    public String getCovidStatus() {
+        return covidStatus;
+    }
+
+    public void setCovidStatus(String covidStatus) {
+        this.covidStatus = covidStatus;
+    }
+
 }

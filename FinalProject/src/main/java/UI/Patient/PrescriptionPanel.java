@@ -27,7 +27,7 @@ public class PrescriptionPanel extends javax.swing.JPanel {
     Patient pat;
     public PrescriptionPanel(EcoSystem business, UserAccount ua) {
         initComponents();
-        this.system = system;
+        this.system = business;
         pat= null;
         for (Network net : system.getNetworkMap().values()) {
             for (Patient p : net.getPatientDirectory().getPatients()) {

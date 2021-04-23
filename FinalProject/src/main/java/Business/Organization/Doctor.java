@@ -8,6 +8,7 @@ package Business.Organization;
 import Business.Employee.Employee;
 import Business.Person;
 import Business.UserAccount.UserAccount;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,11 @@ public class Doctor extends Employee{
     List<Patient> patientList;
     String fullName;
     UserAccount user;
-
+    
+    public Doctor(){
+        this.patientList = new ArrayList<>();
+        
+    }
     public CovidCareCenter getCareCenter() {
         return careCenter;
     }
@@ -52,5 +57,8 @@ public class Doctor extends Employee{
         this.user = user;
     }
     
-    
+     @Override
+    public String toString() {
+        return this.fullName;
+    }
 }
