@@ -6,13 +6,21 @@
 package UI.Analytics;
 
 import Business.EcoSystem;
+import Business.Network.Network;
+import Business.Organization.Patient;
 import com.github.sarxos.webcam.Webcam;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -41,28 +49,39 @@ public class GraphPanel extends javax.swing.JPanel {
     public GraphPanel(EcoSystem system) {
         initComponents();
         this.system = system;
-        CategoryDataset set = createDataset();
+        CategoryDataset set = createChart1Dataset();
         JFreeChart chart = createChart(set);
+        ChartPanel cp = new ChartPanel(chart);
+        Dimension dim = new Dimension(250 ,300);
+        cp.setPreferredSize(dim);
+        ChartPanel cp1 = new ChartPanel(chart);
+        cp1.setPreferredSize(dim);
+        chart1.setLayout(new GridLayout(2,1));
+        chart1.add(cp);
+        chart1.validate();
+        chart1.add(cp1);
+        chart1.validate();
     }
-
-    private CategoryDataset createDataset() {
-        String row = "Row";
+    private CategoryDataset createChart1Dataset() {
+        String row = "Network Name";
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(350, row, "A");
-        dataset.addValue(690, row, "B");
-        dataset.addValue(510, row, "C");
-        dataset.addValue(570, row, "D");
-        dataset.addValue(180, row, "E");
-        dataset.addValue(504, row, "F");
+        for(Network n:system.getNetworkMap().values()){
+            int infected = 0;
+            for(Patient p:n.getPatientDirectory().getPatients()){
+                if(p.getCovidStatus().equalsIgnoreCase("infected")){
+                    infected+=1;
+                }
+            }
+            dataset.addValue(infected, row, n.getName());
+        }
         return dataset;
     }
 
     private JFreeChart createChart(CategoryDataset dataset) {
-        CategoryAxis categoryAxis = new CategoryAxis("");
-        ValueAxis valueAxis = new NumberAxis("");
-        valueAxis.setVisible(false);
+        CategoryAxis categoryAxis = new CategoryAxis("Network Name");
+        ValueAxis valueAxis = new NumberAxis("#Patients infected with Covid-19");
+        valueAxis.setVisible(true);
         BarRenderer renderer = new BarRenderer() {
-
             @Override
             public Paint getItemPaint(int row, int column) {
                 return switch (column) {
@@ -97,86 +116,42 @@ public class GraphPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        chart1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        chart1 = new javax.swing.JPanel();
 
-        jButton1.setText("Take Picture");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("jLabel1");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Covid Analytics");
 
         javax.swing.GroupLayout chart1Layout = new javax.swing.GroupLayout(chart1);
         chart1.setLayout(chart1Layout);
         chart1Layout.setHorizontalGroup(
             chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chart1Layout.createSequentialGroup()
-                .addGap(269, 269, 269)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         chart1Layout.setVerticalGroup(
             chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chart1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chart1Layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 916, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+            .addGap(0, 542, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
             .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(chart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Webcam webcam = Webcam.getDefault();
-        webcam.open();
-        BufferedImage image = webcam.getImage();
-        ImageIcon img = new ImageIcon(image);
-        Image newimg = img.getImage().getScaledInstance(120,120,java.awt.Image.SCALE_SMOOTH); 
-        img = new ImageIcon(newimg);
-        jLabel1.setIcon(img);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chart1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

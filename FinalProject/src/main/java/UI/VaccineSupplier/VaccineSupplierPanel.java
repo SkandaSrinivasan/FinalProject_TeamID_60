@@ -192,7 +192,7 @@ private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
                     JOptionPane.showMessageDialog(this, "Insufficient Supply of the requested vaccine", "fail", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            if (r.getRequestedVaccine().equals("Moderna")) {
+            if (r.getRequestedVaccine().equals("Moderna")) { 
                 if (org.getModernaDoses() > Integer.parseInt(r.getDosesRequired())) {
                     r.getSite().getVaccineStock().put("Moderna", org.getModernaDoses() - Integer.parseInt(r.getDosesRequired()));
                     org.setModernaDoses(org.getModernaDoses() - Integer.parseInt(r.getDosesRequired()));

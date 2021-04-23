@@ -74,6 +74,50 @@ public class MapMarker {
                 + "      })(marker));"
                 + "   map.fitBounds(bounds);\n";
     }
+    public static String setInfectedMarkerOnMap(String lat, String longitude, String name) {
+        name = (name == null || name == "") ? "default" : name;
+        return "var myLatlng = new google.maps.LatLng(" + lat + "," + longitude + ");\n"
+                + "var icon = {url: 'icons8-coronavirus.gif', scaledSize: new google.maps.Size(35, 35)};\n"
+                + "marker = new google.maps.Marker({\n"
+                + "    position: myLatlng,\n"
+                + "    map: map,\n"
+                + "    icon:icon,"
+                + "    title: '" + name + "'\n"
+                + "});"
+                + "var infowindow = new google.maps.InfoWindow();"
+                + "  bounds.extend(marker.position);"
+                + "google.maps.event.addListener(marker, 'click', (function(marker) {\n"
+                + "        return function() {\n"
+                + "          infowindow.setContent('" + name + "');\n"
+                + "          infowindow.open(map, marker);\n"
+                + "           currentMarker.lat = marker.getPosition().lat()+'';\n "
+                + "           currentMarker.lng = marker.getPosition().lng()+'';\n "
+                + "        }\n"
+                + "      })(marker));"
+                + "   map.fitBounds(bounds);\n";
+    }
+    public static String setVaxMarkersOnMap(String lat, String longitude, String name) {
+        name = (name == null || name == "") ? "default" : name;
+        return "var myLatlng = new google.maps.LatLng(" + lat + "," + longitude + ");\n"
+                + "var icon = {url: 'icons8-coronavirus.gif', scaledSize: new google.maps.Size(35, 35)};\n"
+                + "marker = new google.maps.Marker({\n"
+                + "    position: myLatlng,\n"
+                + "    map: map,\n"
+                + "    icon:icon,"
+                + "    title: '" + name + "'\n"
+                + "});"
+                + "var infowindow = new google.maps.InfoWindow();"
+                + "  bounds.extend(marker.position);"
+                + "google.maps.event.addListener(marker, 'click', (function(marker) {\n"
+                + "        return function() {\n"
+                + "          infowindow.setContent('" + name + "');\n"
+                + "          infowindow.open(map, marker);\n"
+                + "           currentMarker.lat = marker.getPosition().lat()+'';\n "
+                + "           currentMarker.lng = marker.getPosition().lng()+'';\n "
+                + "        }\n"
+                + "      })(marker));"
+                + "   map.fitBounds(bounds);\n";
+    }
 
     public MapMarker() {
 
@@ -154,6 +198,46 @@ public class MapMarker {
             });
         });
     }
+    public void setInfectedMarkers(List<LatLong> coordinateList, EcoSystem system) {
+        Browser browser = createBrowser();
+        SwingUtilities.invokeLater(() -> {
+            BrowserView view = BrowserView.newInstance(browser);
+
+            JButton saveMarkerButton = new JButton("Save Marker");
+            JButton setAddressButton = new JButton("Save Place");
+
+            JPanel toolBar = createToolBar(Arrays.asList(saveMarkerButton));
+
+            saveMarkerButton.addActionListener(e -> browser.mainFrame().ifPresent(s -> {
+                JsObject jsObject = s.executeJavaScript("currentMarker");
+                List<String> propertyNames = jsObject.propertyNames();
+                try {
+                    LatLong clickedLatLong = new LatLong((String) jsObject.property("lat").get(), (String) jsObject.property("lng").get());
+                    if (system != null) {
+                        system.setTempLocation(clickedLatLong);
+                        mf.dispose();
+                    }
+                    System.out.println(clickedLatLong);
+                } catch (NoSuchElementException ex) {
+                    s.executeJavaScript(" M.Toast.dismissAll();  M.toast({html: 'Please click on the markers and save!'})");
+                    System.out.println("show some pop up to say click on the marker. it wont get value if not clicked on marker");
+                }
+
+            }));
+
+            createFrame(toolBar, view);
+            browser.navigation().loadUrl("file:///" + Paths.get(".").toAbsolutePath().toString()
+                    + "/src/main/java/JxMaps/main/Web/map.html");
+            browser.navigation().on(NavigationFinished.class, event -> {
+                for (LatLong coord : coordinateList) {
+                    browser.mainFrame().ifPresent(f
+                            -> f.executeJavaScript(setInfectedMarkerOnMap(coord.getLatitude(), coord.getLongitude(), coord.getName())));
+                }
+
+            });
+        });
+    }
+    
 
     public LatLong getLatLngFromGoogleMapsUrl(String googleMapsUrl) {
         Optional<String> latLongString = Arrays.asList(googleMapsUrl.split("/")).stream().filter(i -> i.startsWith("@")).findFirst();
