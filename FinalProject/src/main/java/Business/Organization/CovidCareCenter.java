@@ -6,6 +6,7 @@
 package Business.Organization;
 
 import Business.Address.Address;
+import Business.Components.Prescription;
 import Business.UserAccount.UserAccount;
 import Role.HospitalAdminRole;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class CovidCareCenter extends Organization{
     
     List<Doctor> doctorList;
     List<Patient> patientList;
+    List<CovidTest> covidTests;
+    List<Prescription> prescriptions;
     UserAccount admin;
     public CovidCareCenter(String name){
         super(name);
@@ -26,6 +29,8 @@ public class CovidCareCenter extends Organization{
         this.type = Organization.Type.CovidCareCenter;
         this.doctorList = new ArrayList<>();
         this.patientList = new ArrayList<>();
+        this.covidTests = new ArrayList<>();
+        this.prescriptions = new ArrayList<>();
     }
 
     public List<Doctor> getDoctorList() {
@@ -50,6 +55,22 @@ public class CovidCareCenter extends Organization{
 
     public void setAdmin(UserAccount admin) {
         this.admin = admin;
+    }
+
+    public List<CovidTest> getCovidTests() {
+        return covidTests;
+    }
+
+    public void setCovidTests(List<CovidTest> covidTests) {
+        this.covidTests = covidTests;
+    }
+
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
+    }
+
+    public void setPrescriptions(List<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
     }
 
 

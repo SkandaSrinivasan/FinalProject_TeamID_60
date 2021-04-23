@@ -5,12 +5,21 @@
  */
 package UI.Doctor;
 
+import Business.Components.Prescription;
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Network.Network;
 import Business.Organization.CovidCareCenter;
+import Business.Organization.CovidTest;
 import Business.Organization.Doctor;
 import Business.Organization.Organization;
+import Business.Organization.Patient;
 import Business.UserAccount.UserAccount;
+import com.finalproject.finalproject.LoginPanel;
+import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,12 +32,15 @@ public class DoctorPanel extends javax.swing.JPanel {
      */
     EcoSystem system;
     UserAccount account;
-
+    Doctor doc;
+    Patient pat;
+    CovidCareCenter hosp;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public DoctorPanel(EcoSystem system, UserAccount account) {
         initComponents();
         this.system = system;
         this.account = account;
-        Doctor doc = null;
+        doc = null;
         for (Network n : system.getNetworkMap().values()) {
             for (Organization o : n.getCovidCare().getOrganizationDirectory().getOrgList()) {
                 if (o.getType().equals(Organization.Type.CovidCareCenter)) {
@@ -41,8 +53,17 @@ public class DoctorPanel extends javax.swing.JPanel {
                 }
             }
         }
-        
+        populateTable();
         lblTitle.setText("Welcome Doctor, " + doc.getFullName());
+    }
+
+    public void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
+        model.setRowCount(0);
+
+        for (Patient pat : doc.getPatientList()) {
+            model.addRow(new Object[]{pat, pat.getPatientId(), pat.getNetwork().getName(), pat.getCovidStatus()});
+        }
     }
 
     /**
@@ -59,11 +80,12 @@ public class DoctorPanel extends javax.swing.JPanel {
         patientTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtTest = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtprescription = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        finishAppointments = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Welcome,Doctor");
@@ -83,71 +105,129 @@ public class DoctorPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Patient List:");
 
-        jLabel3.setText("Covid Tests:");
+        jLabel3.setText("Order Covid Test?");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Needed", "PCR", "Antigen" }));
+        txtTest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Needed", "PCR", "Antigen" }));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtprescription.setColumns(20);
+        txtprescription.setRows(5);
+        jScrollPane2.setViewportView(txtprescription);
 
         jLabel4.setText("Prescription:");
 
-        jButton2.setText("Finish Appointment");
+        finishAppointments.setText("Finish Appointment");
+        finishAppointments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finishAppointmentsActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(finishAppointments)))))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2))
+                    .addComponent(finishAppointments))
+                .addGap(0, 54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void finishAppointmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishAppointmentsActionPerformed
+        // TODO add your handling code here:'
+         DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
+            int row = patientTable.getSelectedRow();
+            pat = (Patient) model.getValueAt(row, 0);
+        if (!(txtTest.getSelectedItem().toString().equals("Not Needed"))) {
+            System.out.println("Covid test Creation taking place");
+            String testType = txtTest.getSelectedItem().toString();
+            CovidTest test = new CovidTest(pat, doc, doc.getCareCenter());
+            test.setType(txtTest.getSelectedItem().toString());     
+            test.setOrderedDate(new Date());
+            test.setOutcome("Pending");
+            test.setReferringDoctor(doc);
+            test.setReferringHospital(doc.getCareCenter());
+            pat.getTests().add(test);
+            doc.getCareCenter().getCovidTests().add(test);
+        }
+        if (!txtprescription.getText().equals("")) {
+            Prescription pres = new Prescription(new Date(), txtprescription.getText(), doc);
+            pat.getPrescriptions().add(pres);
+            doc.getCareCenter().getPrescriptions().add(pres);
+            
+        }
+            pat.setActiveAppointment(false);
+            pat.setAppointmentStatus("No Upcoming Appointment");
+            doc.getPatientList().remove(pat);
+            populateTable();
+    }//GEN-LAST:event_finishAppointmentsActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        topFrame.getContentPane().removeAll();
+        topFrame.setContentPane(new LoginPanel(this.system));
+        topFrame.revalidate();
+        dB4OUtil.storeSystem(system);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton finishAppointments;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable patientTable;
+    private javax.swing.JComboBox<String> txtTest;
+    private javax.swing.JTextArea txtprescription;
     // End of variables declaration//GEN-END:variables
 }

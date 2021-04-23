@@ -6,6 +6,17 @@
 package UI.Patient;
 
 import Business.EcoSystem;
+import Business.Network.Network;
+import Business.Organization.CovidCareCenter;
+import Business.Organization.Doctor;
+import Business.Organization.Patient;
+import Business.Organization.VaccineSiteOrganization;
+import Business.UserAccount.UserAccount;
+import JxMaps.main.MapMarker;
+import JxMaps.main.Modal.LatLong;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,10 +28,19 @@ public class VaccineAppointment extends javax.swing.JPanel {
      * Creates new form VaccineAppointment
      */
     EcoSystem system;
-    public VaccineAppointment(EcoSystem system) {
+    UserAccount ua;
+    public VaccineAppointment(EcoSystem system,UserAccount ua) {
         initComponents();
         this.system = system;
+        this.ua = ua;
+        for (Network n : system.getNetworkMap().values()) {
+            networkbox.addItem(n);
+        }
     }
+    
+    public void populateVaccine(){
+    
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,89 +53,160 @@ public class VaccineAppointment extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        networkbox = new javax.swing.JComboBox<>();
+        setSite = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        vaxbox = new javax.swing.JComboBox<>();
+        refresh = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Make Vaccine Appointment");
 
         jLabel2.setText("Select State:");
 
-        jLabel3.setText("Vaccination Site:");
-
-        jButton1.setText("Select Site");
+        setSite.setText("Select Site");
+        setSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setSiteActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Make Appointment");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("Select Preferred Vaccine:");
+        jLabel4.setText("Available Vaccines:");
+
+        refresh.setText("Refresh");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(228, 228, 228)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)))
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(292, 292, 292))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(39, 39, 39)
+                        .addComponent(vaxbox, 0, 182, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(networkbox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(setSite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(refresh)
+                .addGap(152, 152, 152))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(networkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addComponent(setSite)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(vaxbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refresh))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(0, 190, Short.MAX_VALUE))
+                .addGap(0, 246, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSiteActionPerformed
+        // TODO add your handling code here:
+        Network net = (Network) networkbox.getSelectedItem();
+        List<LatLong> coordinateList = new ArrayList<>();
+        for (VaccineSiteOrganization o : net.getVaxCenter().getVaxSites()) {
+            coordinateList.add(o.getLocation());
+        }
+        MapMarker map = new MapMarker();
+        map.setMapMarkers(coordinateList, system);
+    }//GEN-LAST:event_setSiteActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        // TODO add your handling code here:
+        LatLong tempLoc = system.getTempLocation();
+        if (tempLoc == null) {
+            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            VaccineSiteOrganization co = null;
+            Network net = (Network) networkbox.getSelectedItem();
+            for (VaccineSiteOrganization o : net.getVaxCenter().getVaxSites()) {
+                if (o.getLocation().equals(system.getTempLocation())) {
+                    co = o;
+                }
+            }
+            vaxbox.removeAll();
+            for (String s:co.getVaccineStock().keySet()) {
+                if(co.getVaccineStock().get(s) > 0){
+                    vaxbox.addItem(s+"("+String.valueOf(co.getVaccineStock().get(s)+")"));
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_refreshActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        Network net = (Network) networkbox.getSelectedItem();
+        Patient pat = null;
+        for (Patient p : net.getPatientDirectory().getPatients()) {
+            if (p.getUser().equals(ua)) {
+                pat = p;
+            }
+        }
+        LatLong tempLoc = system.getTempLocation();
+         if(pat.isVaxAppointment()==true){
+            JOptionPane.showMessageDialog(this, "You already have a pending vaccination appointment", "Create fail", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (tempLoc == null) {
+            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.ERROR_MESSAGE);
+        } else {
+            VaccineSiteOrganization co = null;
+            for (VaccineSiteOrganization o : net.getVaxCenter().getVaxSites()) {
+                if (o.getLocation().equals(system.getTempLocation())) {
+                    co = o;
+                }
+            }
+
+            pat.setVaxAppointment(true);
+            pat.setRequestedVaccine(vaxbox.getSelectedItem().toString().split("\\(")[0]);
+            co.getPatients().add(pat);
+            system.setTempLocation(null);
+            JOptionPane.showMessageDialog(this, "Appointment Made!!", "Created", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<Network> networkbox;
+    private javax.swing.JButton refresh;
+    private javax.swing.JButton setSite;
+    private javax.swing.JComboBox<String> vaxbox;
     // End of variables declaration//GEN-END:variables
 }

@@ -251,6 +251,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (!orgBox.getSelectedItem().toString().equals("")) {
             LatLong location = system.getTempLocation();
+            location.setName(txtOrgName.getText());
             if(location == null){
                 JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
                 return;

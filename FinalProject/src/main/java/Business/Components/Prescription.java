@@ -16,11 +16,12 @@ public class Prescription {
     Date prescribedDate;
     Doctor prescribingDoctor;
     String note;
-    
+    String filled;
     public Prescription(Date date,String note,Doctor doc){
         this.prescribedDate = date;
         this.note = note;
         this.prescribingDoctor= doc;
+        this.filled = "Unfilled";
     }
 
     public Date getPrescribedDate() {
@@ -51,4 +52,13 @@ public class Prescription {
         return prescribedDate.toString();
 
     }
+
+    public String getFilled() {
+        return filled;
+    }
+
+    public void setFilled(String filled) {
+        this.filled = filled;
+    }
+    
 }

@@ -6,6 +6,7 @@
 package Business.Organization;
 
 import Business.Components.Prescription;
+import Business.Network.Network;
 import Business.Person;
 import Business.UserAccount.UserAccount;
 import JxMaps.main.Modal.LatLong;
@@ -20,36 +21,49 @@ import java.util.List;
  * @author Skanda
  */
 public class Patient extends Person {
-    double id=0;
+    double id = 0;
+    String name;
     String insuranceNumber;
     UserAccount user;
     List<CovidTest> tests;
-    int patientId;
+    String patientId;
     Role role;
     LatLong location;
     List<Prescription> prescriptions;
     boolean activeAppointment;
+    boolean vaxAppointment;
     Date appointmentDate;
+    String vaxStatus;
     String appointmentStatus;
-    public Patient(String name,double id) {
+    Network network;
+    String covidStatus;
+    String requestedVaccine;
+    
+    public Patient(String name, String id,Network network) {
         super(name);
+        this.name = name;
         this.tests = new ArrayList<>();
-        this.id = id;
+        this.patientId = id;
         this.role = new PatientRole();
         this.prescriptions = new ArrayList<>();
         this.activeAppointment = false;
         this.appointmentStatus = "No Current appointment";
+        this.network = network;
+        this.covidStatus = "Negative";
+        this.vaxStatus = "Unvaccinated";
     }
 
     public double getId() {
         return id;
     }
-
+ @Override
+    public String toString() {
+        return getName();
+    }
     public void setId(double id) {
         this.id = id;
     }
 
- 
     public String getInsuranceNumber() {
         return insuranceNumber;
     }
@@ -74,11 +88,11 @@ public class Patient extends Person {
         this.tests = tests;
     }
 
-    public int getPatientId() {
+    public String getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(String patientId) {
         this.patientId = patientId;
     }
 
@@ -129,6 +143,47 @@ public class Patient extends Person {
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
     }
-    
-    
+
+    public boolean isVaxAppointment() {
+        return vaxAppointment;
+    }
+
+    public void setVaxAppointment(boolean vaxAppointment) {
+        this.vaxAppointment = vaxAppointment;
+    }
+
+   
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
+    }
+
+    public String getCovidStatus() {
+        return covidStatus;
+    }
+
+    public void setCovidStatus(String covidStatus) {
+        this.covidStatus = covidStatus;
+    }
+
+    public String getVaxStatus() {
+        return vaxStatus;
+    }
+
+    public void setVaxStatus(String vaxStatus) {
+        this.vaxStatus = vaxStatus;
+    }
+
+    public String getRequestedVaccine() {
+        return requestedVaccine;
+    }
+
+    public void setRequestedVaccine(String requestedVaccine) {
+        this.requestedVaccine = requestedVaccine;
+    }
+
 }

@@ -5,6 +5,7 @@
  */
 package Business.Organization;
 
+import Role.VaccineSiteAdminRole;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +17,16 @@ import java.util.List;
 public class VaccineSiteOrganization extends Organization {
     List<VaccineAppointment> vaccineApts;
     HashMap<String,Integer> vaccineStock = new HashMap<>();
+    List<Patient> patients;
     public VaccineSiteOrganization(String name){
         super(name);
         vaccineApts = new ArrayList<>();
+        vaccineStock.put("Pfizer", 100);
+        vaccineStock.put("Moderna", 100);
+        vaccineStock.put("J&J", 100);
+        this.patients = new ArrayList<>();
+        this.role = new VaccineSiteAdminRole();
+        this.type = Organization.Type.VaccineSite;
     }
 
     public List<VaccineAppointment> getVaccineApts() {
@@ -35,6 +43,14 @@ public class VaccineSiteOrganization extends Organization {
 
     public void setVaccineStock(HashMap<String, Integer> vaccineStock) {
         this.vaccineStock = vaccineStock;
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
     }
     
 }

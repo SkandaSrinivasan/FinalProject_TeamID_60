@@ -27,7 +27,7 @@ public class PrescriptionPanel extends javax.swing.JPanel {
     Patient pat;
     public PrescriptionPanel(EcoSystem business, UserAccount ua) {
         initComponents();
-        this.system = system;
+        this.system = business;
         pat= null;
         for (Network net : system.getNetworkMap().values()) {
             for (Patient p : net.getPatientDirectory().getPatients()) {
@@ -36,20 +36,15 @@ public class PrescriptionPanel extends javax.swing.JPanel {
                 }
             }
         }
+        populateTable();
     }
     public void populateTable(){
        DefaultTableModel model = (DefaultTableModel)pTable.getModel();
        model.setRowCount(0);
        for(Prescription p:pat.getPrescriptions()){
-           model.addRow(new Object[]{p,p.getPrescribingDoctor().getFullName()});
+           model.addRow(new Object[]{p,p.getPrescribingDoctor().getFullName(),p.getNote(),p.getFilled()});
        }
-       pTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-        public void valueChanged(ListSelectionEvent event) {
-            int row = pTable.getSelectedRow();
-            Prescription p = (Prescription) model.getValueAt(row, 0);
-            jTextArea1.setText(p.getNote());
-        }
-    });
+
     }
 
     /**
@@ -64,44 +59,29 @@ public class PrescriptionPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pTable = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("View Prescriptions");
 
         pTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Date Prescribed", "Prescribing Doctor"
+                "Date Prescribed", "Prescribing Doctor", "Medicines", "Fill Status"
             }
         ));
         jScrollPane1.setViewportView(pTable);
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
-
-        jLabel2.setText("Prescription Notes:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(213, 213, 213)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(234, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,21 +89,14 @@ public class PrescriptionPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(0, 77, Short.MAX_VALUE))
+                .addGap(0, 195, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable pTable;
     // End of variables declaration//GEN-END:variables
 }

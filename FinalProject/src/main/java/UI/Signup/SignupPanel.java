@@ -10,7 +10,9 @@ import Business.EcoSystem;
 import Business.Network.Network;
 import Business.Organization.Patient;
 import Business.UserAccount.UserAccount;
+import Business.Utils.Email;
 import JxMaps.main.MapMarker;
+import JxMaps.main.Modal.LatLong;
 import Role.PatientRole;
 import com.finalproject.finalproject.LoginPanel;
 import com.github.javafaker.service.FakeValuesService;
@@ -87,6 +89,8 @@ public class SignupPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Password");
 
+        txtId.setEditable(false);
+
         jLabel7.setText("Email Address:");
 
         jButton1.setText("Select Location");
@@ -97,6 +101,8 @@ public class SignupPanel extends javax.swing.JPanel {
         });
 
         jLabel8.setText("Location");
+
+        txtLocation.setEditable(false);
 
         jButton2.setText("Register");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -204,13 +210,23 @@ public class SignupPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
         if (system.getUserDir().isUserUnique(txtUser.getText())) {
-            Patient patient = new Patient(txtName.getName(), Double.parseDouble(txtId.getText()));
+            Patient patient = new Patient(txtName.getText(), txtId.getText(), (Network) networkBox.getSelectedItem());
             Network n = (Network) networkBox.getSelectedItem();
             UserAccount user = new UserAccount(txtUser.getText(), txtPass.getText(), new PatientRole());
             patient.setUser(user);
-            patient.setLocation(system.getTempLocation());
+            LatLong loc = system.getTempLocation();
+            loc.setName(patient.getPatientId());
+            patient.setLocation(loc);
             n.getPatientDirectory().getPatients().add(patient);
             system.getUserDir().getUsers().add(user);
+            
+            Email email = new Email();
+            try{
+            email.sendEmailWithSubject(txtEmail.getText(),"Covid Care 360 Admin","Your User Account has been created.<br>Your Patient ID#: "+txtId.getText());}
+            catch(Exception e){
+             JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);  
+             return;
+            }
             JOptionPane.showMessageDialog(this, "Patient Created", "Create success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Username already exists", "Create fail", JOptionPane.ERROR_MESSAGE);

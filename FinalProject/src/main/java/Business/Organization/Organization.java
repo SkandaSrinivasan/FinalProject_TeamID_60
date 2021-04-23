@@ -35,8 +35,9 @@ public class Organization {
     public enum Type{
         CovidCareCenter("Covid Care Center"),
         Pharmacy("Pharmacy"),
-        DeliveryMan("Delivery"),
-        SysAdmin("Sysadmin");
+        VaccineSite("VaccineSite"),
+        SysAdmin("Sysadmin"),
+        VaccineSupplier("VaccineSupplier");
 
         private String value;
 

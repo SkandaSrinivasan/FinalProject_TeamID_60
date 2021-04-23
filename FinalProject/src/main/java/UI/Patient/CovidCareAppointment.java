@@ -15,6 +15,7 @@ import Business.UserAccount.UserAccount;
 import JxMaps.main.MapMarker;
 import JxMaps.main.Modal.LatLong;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -30,14 +31,16 @@ public class CovidCareAppointment extends javax.swing.JPanel {
     EcoSystem system;
     UserAccount user;
 
-    public CovidCareAppointment(EcoSystem system,UserAccount ua) {
+    public CovidCareAppointment(EcoSystem system, UserAccount ua) {
         initComponents();
         this.system = system;
+        this.user = ua;
         for (Network n : system.getNetworkMap().values()) {
             networkBox.addItem(n);
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +57,7 @@ public class CovidCareAppointment extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         docBox = new javax.swing.JComboBox<>();
         btnMakeAppointment = new javax.swing.JButton();
+        refresh = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Covid Care Appoinment Finder");
@@ -76,6 +80,13 @@ public class CovidCareAppointment extends javax.swing.JPanel {
             }
         });
 
+        refresh.setText("Refresh");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,17 +96,20 @@ public class CovidCareAppointment extends javax.swing.JPanel {
                 .addGap(230, 230, 230)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnMakeAppointment)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(docBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(btnSetLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(networkBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(310, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(docBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnSetLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(networkBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refresh)))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +124,8 @@ public class CovidCareAppointment extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(docBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(docBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refresh))
                 .addGap(18, 18, 18)
                 .addComponent(btnMakeAppointment)
                 .addGap(0, 313, Short.MAX_VALUE))
@@ -125,38 +140,66 @@ public class CovidCareAppointment extends javax.swing.JPanel {
             coordinateList.add(o.getLocation());
         }
         MapMarker map = new MapMarker();
-        map.setMapMarkers(coordinateList);
-        
+        map.setMapMarkers(coordinateList, system);
+
     }//GEN-LAST:event_btnSetLocationActionPerformed
 
     private void btnMakeAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMakeAppointmentActionPerformed
         // TODO add your handling code here:
-        
+
         Network net = (Network) networkBox.getSelectedItem();
         Patient pat = null;
-        for(Patient p:net.getPatientDirectory().getPatients()){
-            if(p.getUser().equals(user)){
+        for (Patient p : net.getPatientDirectory().getPatients()) {
+            if (p.getUser().equals(user)) {
                 pat = p;
             }
         }
         LatLong tempLoc = system.getTempLocation();
+        if(pat.isActiveAppointment()==true){
+            JOptionPane.showMessageDialog(this, "You already have a pending appointment", "Create fail", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (tempLoc == null) {
-            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
-
+            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.ERROR_MESSAGE);
         } else {
             CovidCareCenter co = null;
             for (CovidCareCenter o : net.getCovidCare().getHospitals()) {
-                if(o.getLocation().equals(system.getTempLocation())){
+                if (o.getLocation().equals(system.getTempLocation())) {
                     co = o;
                 }
             }
             Doctor doc = (Doctor) docBox.getSelectedItem();
             pat.setActiveAppointment(true);
+            pat.setAppointmentStatus("Upcoming Appointment");
+            pat.setAppointmentDate(new Date());
             co.getPatientList().add(pat);
             doc.getPatientList().add(pat);
             system.setTempLocation(null);
+            JOptionPane.showMessageDialog(this, "Appointment Made!!", "Created", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnMakeAppointmentActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        // TODO add your handling code here:
+        LatLong tempLoc = system.getTempLocation();
+        if (tempLoc == null) {
+            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            CovidCareCenter co = null;
+            Network net = (Network) networkBox.getSelectedItem();
+            for (CovidCareCenter o : net.getCovidCare().getHospitals()) {
+                if (o.getLocation().equals(system.getTempLocation())) {
+                    co = o;
+                }
+            }
+            docBox.removeAll();
+            for (Doctor d : co.getDoctorList()) {
+                docBox.addItem(d);
+            }
+            Doctor doc = (Doctor) docBox.getSelectedItem();
+        }
+
+    }//GEN-LAST:event_refreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -167,5 +210,6 @@ public class CovidCareAppointment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JComboBox<Network> networkBox;
+    private javax.swing.JButton refresh;
     // End of variables declaration//GEN-END:variables
 }

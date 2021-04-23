@@ -5,10 +5,13 @@
  */
 package UI.Patient;
 
+import Business.Components.Prescription;
 import Business.EcoSystem;
 import Business.Network.Network;
+import Business.Organization.CovidTest;
 import Business.Organization.Patient;
 import Business.UserAccount.UserAccount;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +28,7 @@ public class CovidTestPanel extends javax.swing.JPanel {
     public CovidTestPanel(EcoSystem system,UserAccount ua) {
         initComponents();
         this.system = system;
+        this.ua = ua;
         pat= null;
         for (Network net : system.getNetworkMap().values()) {
             for (Patient p : net.getPatientDirectory().getPatients()) {
@@ -33,6 +37,14 @@ public class CovidTestPanel extends javax.swing.JPanel {
                 }
             }
         }
+        populateTable();
+    }
+    public void populateTable(){
+        DefaultTableModel model = (DefaultTableModel)cTable.getModel();
+       model.setRowCount(0);
+       for(CovidTest c:pat.getTests()){
+           model.addRow(new Object[]{c.getOrderedDate(),c.getType(),c.getOutcome(),c.getReferringHospital().getName()});
+       }
     }
 
     /**
@@ -45,26 +57,46 @@ public class CovidTestPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        cTable = new javax.swing.JTable();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Covid Tests");
+
+        cTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Ordered Date", "Test Type", "Result", "Hospital Taken At"
+            }
+        ));
+        jScrollPane1.setViewportView(cTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 501, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 181, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable cTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

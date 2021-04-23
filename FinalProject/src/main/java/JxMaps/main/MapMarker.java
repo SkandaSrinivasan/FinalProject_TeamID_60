@@ -102,10 +102,10 @@ public class MapMarker {
 
                         System.out.println(getCurrentBrowserLatLng());
                         system.setTempLocation(getCurrentBrowserLatLng());
-
+                        mf.dispose();
                     }
                     ));
-            JPanel toolBar = createToolBar(Arrays.asList(setMarkerButton, setAddressButton));
+            JPanel toolBar = createToolBar(Arrays.asList(setAddressButton));
 
             createFrame(toolBar, view);
             browser.navigation().loadUrl("https://www.google.com/maps");
@@ -131,7 +131,8 @@ public class MapMarker {
                 try {
                     LatLong clickedLatLong = new LatLong((String) jsObject.property("lat").get(), (String) jsObject.property("lng").get());
                     if (system != null) {
-                        system.setTempLocation(getCurrentBrowserLatLng());
+                        system.setTempLocation(clickedLatLong);
+                        mf.dispose();
                     }
                     System.out.println(clickedLatLong);
                 } catch (NoSuchElementException ex) {
