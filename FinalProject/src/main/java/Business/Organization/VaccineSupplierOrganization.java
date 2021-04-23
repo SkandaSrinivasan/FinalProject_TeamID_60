@@ -6,6 +6,7 @@
 package Business.Organization;
 
 import Business.Components.VaccineSupplyRequest;
+import Role.VaccineSupplierAdmin;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class VaccineSupplierOrganization extends Organization {
         this.pfizerDoses = 500;
         this.jjDoses = 500;
         this.type = Organization.Type.VaccineSupplier;
+        this.role = new VaccineSupplierAdmin();
     }
 
     public List<VaccineSupplyRequest> getRequests() {

@@ -18,6 +18,7 @@ public class VaccineSiteOrganization extends Organization {
     List<VaccineAppointment> vaccineApts;
     HashMap<String,Integer> vaccineStock = new HashMap<>();
     List<Patient> patients;
+    int patientsVaxed;
     public VaccineSiteOrganization(String name){
         super(name);
         vaccineApts = new ArrayList<>();
@@ -27,6 +28,7 @@ public class VaccineSiteOrganization extends Organization {
         this.patients = new ArrayList<>();
         this.role = new VaccineSiteAdminRole();
         this.type = Organization.Type.VaccineSite;
+        patientsVaxed = 0;
     }
 
     public List<VaccineAppointment> getVaccineApts() {
@@ -51,6 +53,14 @@ public class VaccineSiteOrganization extends Organization {
 
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
+    }
+
+    public int getPatientsVaxed() {
+        return patientsVaxed;
+    }
+
+    public void setPatientsVaxed(int patientsVaxed) {
+        this.patientsVaxed = patientsVaxed;
     }
     
 }

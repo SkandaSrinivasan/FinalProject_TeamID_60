@@ -125,6 +125,7 @@ public void populateTable() {
          }
          pat.setVaxStatus("Vaccinated");
          org.getPatients().remove(pat);
+         org.setPatientsVaxed(org.getPatientsVaxed()+1);
          int stock = 0;
          System.out.println(pat.getRequestedVaccine());
          stock= org.getVaccineStock().get(pat.getRequestedVaccine());
