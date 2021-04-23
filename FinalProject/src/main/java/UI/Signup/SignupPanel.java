@@ -13,6 +13,9 @@ import Business.UserAccount.UserAccount;
 import JxMaps.main.MapMarker;
 import Role.PatientRole;
 import com.finalproject.finalproject.LoginPanel;
+import com.github.javafaker.service.FakeValuesService;
+import com.github.javafaker.service.RandomService;
+import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -28,14 +31,19 @@ public class SignupPanel extends javax.swing.JPanel {
      */
     EcoSystem system;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+
     public SignupPanel(EcoSystem system) {
         initComponents();
         this.system = system;
-        
-        for(Network n:system.getNetworkMap().values()){
+
+        for (Network n : system.getNetworkMap().values()) {
             networkBox.addItem(n);
         }
-        txtId.setText(String.valueOf(system.getRand().nextDouble()));
+        FakeValuesService fakeValuesService = new FakeValuesService(
+                new Locale("en-GB"), new RandomService());
+
+        String prefix = fakeValuesService.bothify("??##");
+        txtId.setText("#"+prefix+String.valueOf(system.getRand().nextInt(1000000)));
     }
 
     /**
@@ -109,10 +117,9 @@ public class SignupPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(104, 104, 104)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(98, 98, 98))
             .addGroup(layout.createSequentialGroup()
                 .addGap(205, 205, 205)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,14 +145,18 @@ public class SignupPanel extends javax.swing.JPanel {
                         .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(319, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(networkBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -189,19 +200,19 @@ public class SignupPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:      
-        if(system.getTempLocation() == null){
+        if (system.getTempLocation() == null) {
             JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
-        if(system.getUserDir().isUserUnique(txtUser.getText())){
-            Patient patient = new Patient(txtName.getName(),Double.parseDouble(txtId.getText()));
-            Network n = (Network)networkBox.getSelectedItem();
-            UserAccount user = new UserAccount(txtUser.getText(),txtPass.getText(),new PatientRole());
+        if (system.getUserDir().isUserUnique(txtUser.getText())) {
+            Patient patient = new Patient(txtName.getName(), Double.parseDouble(txtId.getText()));
+            Network n = (Network) networkBox.getSelectedItem();
+            UserAccount user = new UserAccount(txtUser.getText(), txtPass.getText(), new PatientRole());
             patient.setUser(user);
             patient.setLocation(system.getTempLocation());
+            n.getPatientDirectory().getPatients().add(patient);
             system.getUserDir().getUsers().add(user);
             JOptionPane.showMessageDialog(this, "Patient Created", "Create success", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(this, "Username already exists", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
