@@ -18,6 +18,7 @@ import com.finalproject.finalproject.LoginPanel;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 import java.util.Locale;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -45,7 +46,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 new Locale("en-GB"), new RandomService());
 
         String prefix = fakeValuesService.bothify("??##");
-        txtId.setText("#"+prefix+String.valueOf(system.getRand().nextInt(1000000)));
+        txtId.setText("#" + prefix + String.valueOf(system.getRand().nextInt(1000000)));
     }
 
     /**
@@ -215,23 +216,39 @@ public class SignupPanel extends javax.swing.JPanel {
             UserAccount user = new UserAccount(txtUser.getText(), txtPass.getText(), new PatientRole());
             patient.setUser(user);
             LatLong loc = system.getTempLocation();
-            loc.setName(patient.getPatientId());
+            loc.setName(patient.getName());
             patient.setLocation(loc);
+            patient.setEmail(txtEmail.getText());
             n.getPatientDirectory().getPatients().add(patient);
             system.getUserDir().getUsers().add(user);
-            
+
             Email email = new Email();
-            try{
-            email.sendEmailWithSubject(txtEmail.getText(),"Covid Care 360 Admin","Your User Account has been created.<br>Your Patient ID#: "+txtId.getText());}
-            catch(Exception e){
-             JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);  
-             return;
+            if (!isValid(txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            try {
+                email.sendEmailWithSubject(txtEmail.getText(), "Covid Care 360 Admin", "Your User Account has been created.<br>Your Patient ID#: " + txtId.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);
+                return;
             }
             JOptionPane.showMessageDialog(this, "Patient Created", "Create success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Username already exists", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+    public static boolean isValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
+                + "[a-zA-Z0-9_+&*-]+)*@"
+                + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+                + "A-Z]{2,7}$";
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null) {
+            return false;
+        }
+        return pat.matcher(email).matches();
+    }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:

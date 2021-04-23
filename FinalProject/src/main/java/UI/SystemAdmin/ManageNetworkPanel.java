@@ -7,6 +7,7 @@ package UI.SystemAdmin;
 
 import Business.EcoSystem;
 import Business.Network.Network;
+import Business.UserAccount.UserAccount;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,7 +21,8 @@ public class ManageNetworkPanel extends javax.swing.JPanel {
      * Creates new form ManageNetworkPanel
      */
     EcoSystem system;
-    public ManageNetworkPanel(EcoSystem system) {
+    UserAccount ua;
+    public ManageNetworkPanel(EcoSystem system,UserAccount ua) {
         initComponents();
         this.system = system;
         populateTable();

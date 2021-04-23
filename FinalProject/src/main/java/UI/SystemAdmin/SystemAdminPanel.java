@@ -151,7 +151,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
     private void manageNetworkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageNetworkBtnActionPerformed
         // TODO add your handling code here:
-        ManageNetworkPanel networkPanel = new ManageNetworkPanel(system);
+        ManageNetworkPanel networkPanel = new ManageNetworkPanel(system,account);
         jSplitPane1.setRightComponent(networkPanel);
     }//GEN-LAST:event_manageNetworkBtnActionPerformed
 

@@ -8,6 +8,7 @@ package Business.Organization;
 import Business.Address.Address;
 import Business.Coordinates.Coordinates;
 import Business.Employee.EmployeeDirectory;
+import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
@@ -27,6 +28,7 @@ public class Organization {
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     LatLong location;
+    Network network;
     private static int counter=0;
     Address address;
     Role role;
@@ -57,6 +59,7 @@ public class Organization {
         userAccountDirectory = new UserAccountDirectory();
         organizationID = counter;
         ++counter;
+        
     }
 
     public String getName() {
@@ -152,6 +155,14 @@ public class Organization {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
     }
 
 }
