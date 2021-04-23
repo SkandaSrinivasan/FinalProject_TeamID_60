@@ -13,6 +13,9 @@ import Business.UserAccount.UserAccount;
 import JxMaps.main.MapMarker;
 import Role.PatientRole;
 import com.finalproject.finalproject.LoginPanel;
+import com.github.javafaker.service.FakeValuesService;
+import com.github.javafaker.service.RandomService;
+import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -28,14 +31,19 @@ public class SignupPanel extends javax.swing.JPanel {
      */
     EcoSystem system;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+
     public SignupPanel(EcoSystem system) {
         initComponents();
         this.system = system;
-        
-        for(Network n:system.getNetworkMap().values()){
+
+        for (Network n : system.getNetworkMap().values()) {
             networkBox.addItem(n);
         }
-        txtId.setText(String.valueOf(system.getRand().nextDouble()));
+        FakeValuesService fakeValuesService = new FakeValuesService(
+                new Locale("en-GB"), new RandomService());
+
+        String prefix = fakeValuesService.bothify("??##");
+        txtId.setText("#"+prefix+String.valueOf(system.getRand().nextInt(1000000)));
     }
 
     /**
@@ -192,19 +200,19 @@ public class SignupPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:      
-        if(system.getTempLocation() == null){
+        if (system.getTempLocation() == null) {
             JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
-        if(system.getUserDir().isUserUnique(txtUser.getText())){
-            Patient patient = new Patient(txtName.getName(),Double.parseDouble(txtId.getText()));
-            Network n = (Network)networkBox.getSelectedItem();
-            UserAccount user = new UserAccount(txtUser.getText(),txtPass.getText(),new PatientRole());
+        if (system.getUserDir().isUserUnique(txtUser.getText())) {
+            Patient patient = new Patient(txtName.getName(), Double.parseDouble(txtId.getText()));
+            Network n = (Network) networkBox.getSelectedItem();
+            UserAccount user = new UserAccount(txtUser.getText(), txtPass.getText(), new PatientRole());
             patient.setUser(user);
             patient.setLocation(system.getTempLocation());
+            n.getPatientDirectory().getPatients().add(patient);
             system.getUserDir().getUsers().add(user);
             JOptionPane.showMessageDialog(this, "Patient Created", "Create success", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(this, "Username already exists", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

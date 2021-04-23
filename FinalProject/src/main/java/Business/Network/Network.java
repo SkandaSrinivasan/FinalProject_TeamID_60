@@ -5,6 +5,7 @@
  */
 package Business.Network;
 
+import Business.Components.PatientDirectory;
 import Business.Enterprise.ContactTracingEnterprise;
 import Business.Enterprise.CovidAnalyticsEnterprise;
 import Business.Enterprise.CovidCareEnterprise;
@@ -25,6 +26,7 @@ public class Network {
     VaccinationCenterEnterprise vaxCenter;
     CovidAnalyticsEnterprise analyticCenter;
     List<Enterprise> enterpriseList;
+    PatientDirectory patientDirectory;
     String name;
     
     public Network(String name){
@@ -38,6 +40,7 @@ public class Network {
         enterpriseList.add(vaxCenter);
         enterpriseList.add(analyticCenter);
         enterpriseList.add(contactTracing);
+        this.patientDirectory = new PatientDirectory();
     }
 
 
@@ -91,6 +94,14 @@ public class Network {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public PatientDirectory getPatientDirectory() {
+        return patientDirectory;
+    }
+
+    public void setPatientDirectory(PatientDirectory patientDirectory) {
+        this.patientDirectory = patientDirectory;
     }
     
 }

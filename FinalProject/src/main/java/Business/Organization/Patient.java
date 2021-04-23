@@ -5,12 +5,14 @@
  */
 package Business.Organization;
 
+import Business.Components.Prescription;
 import Business.Person;
 import Business.UserAccount.UserAccount;
 import JxMaps.main.Modal.LatLong;
 import Role.PatientRole;
 import Role.Role;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,12 +27,18 @@ public class Patient extends Person {
     int patientId;
     Role role;
     LatLong location;
-
+    List<Prescription> prescriptions;
+    boolean activeAppointment;
+    Date appointmentDate;
+    String appointmentStatus;
     public Patient(String name,double id) {
         super(name);
         this.tests = new ArrayList<>();
         this.id = id;
         this.role = new PatientRole();
+        this.prescriptions = new ArrayList<>();
+        this.activeAppointment = false;
+        this.appointmentStatus = "No Current appointment";
     }
 
     public double getId() {
@@ -88,6 +96,38 @@ public class Patient extends Person {
 
     public void setLocation(LatLong location) {
         this.location = location;
+    }
+
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
+    }
+
+    public void setPrescriptions(List<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
+    }
+
+    public boolean isActiveAppointment() {
+        return activeAppointment;
+    }
+
+    public void setActiveAppointment(boolean activeAppointment) {
+        this.activeAppointment = activeAppointment;
+    }
+
+    public Date getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public String getAppointmentStatus() {
+        return appointmentStatus;
+    }
+
+    public void setAppointmentStatus(String appointmentStatus) {
+        this.appointmentStatus = appointmentStatus;
     }
     
     

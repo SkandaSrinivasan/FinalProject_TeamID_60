@@ -11,10 +11,10 @@
             <url>https://europe-maven.pkg.dev/jxbrowser/releases</url>
         </repository>
         <repository>
-                <id>in-project</id>
-                <name>In Project Repo</name>
-                <url>file://${project.basedir}/libs</url>
-            </repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/libs</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -27,7 +27,11 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.15</version>
+        </dependency>
         <dependency>
             <groupId>group.id</groupId>
             <artifactId>db4o</artifactId>

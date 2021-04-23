@@ -7,6 +7,7 @@ package Role;
 
 import Business.EcoSystem;
 import Business.UserAccount.UserAccount;
+import UI.Patient.PatientPanel;
 import javax.swing.JPanel;
 
 /**
@@ -17,7 +18,7 @@ public class PatientRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, EcoSystem business) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new PatientPanel(business,account);
     }
     
 }
