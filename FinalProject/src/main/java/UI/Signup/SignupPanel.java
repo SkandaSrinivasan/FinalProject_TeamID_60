@@ -18,6 +18,7 @@ import com.finalproject.finalproject.LoginPanel;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -46,7 +47,8 @@ public class SignupPanel extends javax.swing.JPanel {
                 new Locale("en-GB"), new RandomService());
 
         String prefix = fakeValuesService.bothify("??##");
-        txtId.setText("#" + prefix + String.valueOf(system.getRand().nextInt(1000000)));
+        
+        txtId.setText("#" + prefix + String.valueOf(new Random().nextInt(1000000)));
     }
 
     /**
