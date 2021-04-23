@@ -201,6 +201,7 @@ public class DoctorPanel extends javax.swing.JPanel {
             
         }
             pat.setActiveAppointment(false);
+            pat.setAppointmentStatus("No Upcoming Appointment");
             doc.getPatientList().remove(pat);
             populateTable();
     }//GEN-LAST:event_finishAppointmentsActionPerformed

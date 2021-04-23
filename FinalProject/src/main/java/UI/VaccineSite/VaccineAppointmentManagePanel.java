@@ -45,8 +45,8 @@ public class VaccineAppointmentManagePanel extends javax.swing.JPanel {
 public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
         model.setRowCount(0);
-        for (Patient pat : org.getPatients()) {
-            model.addRow(new Object[]{pat, pat.getPatientId(), pat.getNetwork().getName(), pat.getVaxStatus()});
+        for (Patient p : org.getPatients()) {
+            model.addRow(new Object[]{p.getName(), p.getPatientId(), p.getNetwork().getName(), p.getVaxStatus()});
         }
     }
     /**
@@ -74,7 +74,7 @@ public void populateTable() {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Patient", "Patient ID#", "Network", "Vaccination Status"
             }
         ));
         jScrollPane1.setViewportView(patientTable);
@@ -115,10 +115,23 @@ public void populateTable() {
         // TODO add your handling code here:
          DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
          int row = patientTable.getSelectedRow();
-         pat = (Patient) model.getValueAt(row, 0);
+         String patientId = (String)model.getValueAt(row, 1);
+         for(Network n:system.getNetworkMap().values()){
+             for(Patient p:n.getPatientDirectory().getPatients()){
+                 if(p.getPatientId().equals(patientId)){
+                     pat = p;
+                 }
+             }
+         }
          pat.setVaxStatus("Vaccinated");
          org.getPatients().remove(pat);
+         int stock = 0;
+         System.out.println(pat.getRequestedVaccine());
+         stock= org.getVaccineStock().get(pat.getRequestedVaccine());
+         stock-=1;
+         org.getVaccineStock().put(pat.getRequestedVaccine(),stock);
          JOptionPane.showMessageDialog(this, "Vaccination Complete", "Success", JOptionPane.INFORMATION_MESSAGE);
+         populateTable();
     }//GEN-LAST:event_adminVaccineActionPerformed
 
 

@@ -102,10 +102,10 @@ public class MapMarker {
 
                         System.out.println(getCurrentBrowserLatLng());
                         system.setTempLocation(getCurrentBrowserLatLng());
-
+                        mf.dispose();
                     }
                     ));
-            JPanel toolBar = createToolBar(Arrays.asList(setMarkerButton, setAddressButton));
+            JPanel toolBar = createToolBar(Arrays.asList(setAddressButton));
 
             createFrame(toolBar, view);
             browser.navigation().loadUrl("https://www.google.com/maps");

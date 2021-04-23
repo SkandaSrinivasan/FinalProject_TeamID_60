@@ -5,11 +5,19 @@
  */
 package UI.VaccineSite;
 
+import Business.Components.VaccineSupplyRequest;
 import Business.EcoSystem;
 import Business.Network.Network;
+import Business.Organization.CovidCareCenter;
 import Business.Organization.Organization;
 import Business.Organization.VaccineSiteOrganization;
+import Business.Organization.VaccineSupplierOrganization;
 import Business.UserAccount.UserAccount;
+import JxMaps.main.MapMarker;
+import JxMaps.main.Modal.LatLong;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,17 +31,15 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
     EcoSystem system;
     UserAccount ua;
     VaccineSiteOrganization org;
-    public SupplyRequestPanel() {
+
+    public SupplyRequestPanel(EcoSystem system, UserAccount ua) {
         initComponents();
         this.system = system;
         this.ua = ua;
-        Network n = jComboBox1.getSelectedItem();
-            for (Organization o : n.getVaxCenter().getOrganizationDirectory().getOrgList()) {
-                if (o.getType().equals(Organization.Type.VaccineSite) && o.getUser().equals(ua)) {
-                    org = (VaccineSiteOrganization) o;                   
-                }
-            }
-        
+        networkBox.removeAllItems();
+        for(Network n:system.getNetworkMap().values()){
+            networkBox.addItem(n);
+        }
     }
 
     /**
@@ -47,20 +53,25 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        networkBox = new javax.swing.JComboBox<>();
+        supplierLocation = new javax.swing.JButton();
         vaccineBox = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtDoses = new javax.swing.JTextField();
+        supplyReq = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Supply Requests");
 
         jLabel2.setText("Network:");
 
-        jButton1.setText("View Suppliers");
+        supplierLocation.setText("View Suppliers");
+        supplierLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierLocationActionPerformed(evt);
+            }
+        });
 
         vaccineBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pfizer", "Modern", "J&J" }));
 
@@ -68,7 +79,12 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Doses Required");
 
-        jButton2.setText("Make Supply Request");
+        supplyReq.setText("Make Supply Request");
+        supplyReq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplyReqActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -82,16 +98,16 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(vaccineBox, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(supplierLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(networkBox, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1))
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtDoses))
+                    .addComponent(supplyReq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(399, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -101,9 +117,9 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(networkBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(supplierLocation)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(vaccineBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -111,23 +127,68 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDoses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(supplyReq, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 275, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void supplyReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplyReqActionPerformed
+        // TODO add your handling code here:
+
+        Network n = (Network) networkBox.getSelectedItem();
+        for (Organization o : n.getVaxCenter().getOrganizationDirectory().getOrgList()) {
+            if (o.getType().equals(Organization.Type.VaccineSite) && o.getUser().equals(ua)) {
+                org = (VaccineSiteOrganization) o;
+            }
+        }
+        VaccineSupplyRequest request = new VaccineSupplyRequest(vaccineBox.getSelectedItem().toString(), txtDoses.getText(), org);
+        Network net = (Network) networkBox.getSelectedItem();
+        LatLong tempLoc = system.getTempLocation();
+        if (tempLoc == null) {
+            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.ERROR_MESSAGE);
+        } else {
+            VaccineSupplierOrganization co = null;
+            for (VaccineSupplierOrganization o : net.getVaxCenter().getSuppliers()) {
+                if (o.getLocation().equals(system.getTempLocation())) {
+                    co = o;
+                }
+            }
+            co.getRequests().add(request);
+            JOptionPane.showMessageDialog(this, "Supply Request Sent", "Create Success", JOptionPane.INFORMATION_MESSAGE);
+            system.setTempLocation(null);
+        }
+    }//GEN-LAST:event_supplyReqActionPerformed
+
+    private void supplierLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierLocationActionPerformed
+        // TODO add your handling code here:
+        Network n = (Network) networkBox.getSelectedItem();
+        for (Organization o : n.getVaxCenter().getOrganizationDirectory().getOrgList()) {
+            if (o.getType().equals(Organization.Type.VaccineSite) && o.getUser().equals(ua)) {
+                org = (VaccineSiteOrganization) o;
+            }
+        }
+        Network net = (Network) networkBox.getSelectedItem();
+        List<LatLong> coordinateList = new ArrayList<>();
+        for (VaccineSupplierOrganization o : net.getVaxCenter().getSuppliers()) {
+            coordinateList.add(o.getLocation());
+        }
+        MapMarker map = new MapMarker();
+        map.setMapMarkers(coordinateList, system);
+
+    }//GEN-LAST:event_supplierLocationActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<Network> networkBox;
+    private javax.swing.JButton supplierLocation;
+    private javax.swing.JButton supplyReq;
+    private javax.swing.JTextField txtDoses;
     private javax.swing.JComboBox<String> vaccineBox;
     // End of variables declaration//GEN-END:variables
 }

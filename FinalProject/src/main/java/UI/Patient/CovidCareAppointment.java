@@ -15,6 +15,7 @@ import Business.UserAccount.UserAccount;
 import JxMaps.main.MapMarker;
 import JxMaps.main.Modal.LatLong;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -169,6 +170,8 @@ public class CovidCareAppointment extends javax.swing.JPanel {
             }
             Doctor doc = (Doctor) docBox.getSelectedItem();
             pat.setActiveAppointment(true);
+            pat.setAppointmentStatus("Upcoming Appointment");
+            pat.setAppointmentDate(new Date());
             co.getPatientList().add(pat);
             doc.getPatientList().add(pat);
             system.setTempLocation(null);

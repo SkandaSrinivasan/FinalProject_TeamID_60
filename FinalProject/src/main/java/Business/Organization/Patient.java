@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class Patient extends Person {
     double id = 0;
+    String name;
     String insuranceNumber;
     UserAccount user;
     List<CovidTest> tests;
@@ -36,9 +37,11 @@ public class Patient extends Person {
     String appointmentStatus;
     Network network;
     String covidStatus;
+    String requestedVaccine;
     
     public Patient(String name, String id,Network network) {
         super(name);
+        this.name = name;
         this.tests = new ArrayList<>();
         this.patientId = id;
         this.role = new PatientRole();
@@ -173,6 +176,14 @@ public class Patient extends Person {
 
     public void setVaxStatus(String vaxStatus) {
         this.vaxStatus = vaxStatus;
+    }
+
+    public String getRequestedVaccine() {
+        return requestedVaccine;
+    }
+
+    public void setRequestedVaccine(String requestedVaccine) {
+        this.requestedVaccine = requestedVaccine;
     }
 
 }

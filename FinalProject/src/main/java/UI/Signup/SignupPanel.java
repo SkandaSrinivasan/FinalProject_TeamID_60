@@ -12,6 +12,7 @@ import Business.Organization.Patient;
 import Business.UserAccount.UserAccount;
 import Business.Utils.Email;
 import JxMaps.main.MapMarker;
+import JxMaps.main.Modal.LatLong;
 import Role.PatientRole;
 import com.finalproject.finalproject.LoginPanel;
 import com.github.javafaker.service.FakeValuesService;
@@ -209,15 +210,23 @@ public class SignupPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
         if (system.getUserDir().isUserUnique(txtUser.getText())) {
-            Patient patient = new Patient(txtName.getName(), txtId.getText(), (Network) networkBox.getSelectedItem());
+            Patient patient = new Patient(txtName.getText(), txtId.getText(), (Network) networkBox.getSelectedItem());
             Network n = (Network) networkBox.getSelectedItem();
             UserAccount user = new UserAccount(txtUser.getText(), txtPass.getText(), new PatientRole());
             patient.setUser(user);
-            patient.setLocation(system.getTempLocation());
+            LatLong loc = system.getTempLocation();
+            loc.setName(patient.getPatientId());
+            patient.setLocation(loc);
             n.getPatientDirectory().getPatients().add(patient);
             system.getUserDir().getUsers().add(user);
+            
             Email email = new Email();
-            email.sendEmailWithSubject(txtEmail.getText(),"Covid Care 350 Admin","Your User Account has been created.<br>Your Patient ID#: "+txtId.getText());
+            try{
+            email.sendEmailWithSubject(txtEmail.getText(),"Covid Care 360 Admin","Your User Account has been created.<br>Your Patient ID#: "+txtId.getText());}
+            catch(Exception e){
+             JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);  
+             return;
+            }
             JOptionPane.showMessageDialog(this, "Patient Created", "Create success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Username already exists", "Create fail", JOptionPane.ERROR_MESSAGE);

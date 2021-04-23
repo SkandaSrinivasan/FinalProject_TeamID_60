@@ -191,6 +191,7 @@ public class VaccineAppointment extends javax.swing.JPanel {
             }
 
             pat.setVaxAppointment(true);
+            pat.setRequestedVaccine(vaxbox.getSelectedItem().toString().split("\\(")[0]);
             co.getPatients().add(pat);
             system.setTempLocation(null);
             JOptionPane.showMessageDialog(this, "Appointment Made!!", "Created", JOptionPane.INFORMATION_MESSAGE);
