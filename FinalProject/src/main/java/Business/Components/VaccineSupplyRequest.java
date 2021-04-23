@@ -14,11 +14,13 @@ import Business.Organization.VaccineSiteOrganization;
 public class VaccineSupplyRequest {
     String requestedVaccine;
     String dosesRequired;
+    String status;
     VaccineSiteOrganization site;
     public VaccineSupplyRequest(String requestedVaccine,String dosesRequired,VaccineSiteOrganization site){
         this.requestedVaccine = requestedVaccine;
         this.dosesRequired = dosesRequired;
         this.site = site;
+        this.status = "Pending";
     }
 
     public String getRequestedVaccine() {
@@ -43,6 +45,14 @@ public class VaccineSupplyRequest {
 
     public void setSite(VaccineSiteOrganization site) {
         this.site = site;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }

@@ -5,8 +5,12 @@
  */
 package UI.VaccineSite;
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.UserAccount.UserAccount;
+import com.finalproject.finalproject.LoginPanel;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,6 +23,7 @@ public class VaccineSitePanel extends javax.swing.JPanel {
      */
     UserAccount ua;
     EcoSystem system;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public VaccineSitePanel(EcoSystem system,UserAccount ua) {
         this.system = system;
         this.ua= ua;
@@ -38,6 +43,8 @@ public class VaccineSitePanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         vaccinemanage = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        siteStatus = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         vaccinemanage.setText("Handle Appointments");
@@ -54,16 +61,32 @@ public class VaccineSitePanel extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("LogOut");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        siteStatus.setText("Site Status");
+        siteStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siteStatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(vaccinemanage)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(siteStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -72,7 +95,11 @@ public class VaccineSitePanel extends javax.swing.JPanel {
                 .addComponent(vaccinemanage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addGap(0, 400, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(siteStatus)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(0, 344, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -114,12 +141,29 @@ public class VaccineSitePanel extends javax.swing.JPanel {
         jSplitPane1.setRightComponent(pan);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        topFrame.getContentPane().removeAll();
+        topFrame.setContentPane(new LoginPanel(this.system));
+        topFrame.revalidate();
+        dB4OUtil.storeSystem(system);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void siteStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siteStatusActionPerformed
+        // TODO add your handling code here:
+        SiteStatus stat = new SiteStatus(system, ua);
+        jSplitPane1.setRightComponent(stat);
+    }//GEN-LAST:event_siteStatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton siteStatus;
     private javax.swing.JButton vaccinemanage;
     // End of variables declaration//GEN-END:variables
 }

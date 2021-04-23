@@ -73,7 +73,7 @@ public class SupplyRequestPanel extends javax.swing.JPanel {
             }
         });
 
-        vaccineBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pfizer", "Modern", "J&J" }));
+        vaccineBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pfizer", "Moderna", "J&J" }));
 
         jLabel3.setText("Vaccine:");
 
