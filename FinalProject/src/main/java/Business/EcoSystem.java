@@ -32,12 +32,10 @@ public class EcoSystem {
         }
         return business;
     }
-    Random rand;
 
     EcoSystem() {
         this.networkMap = new HashMap<>();
         userDir = new UserAccountDirectory();
-        this.rand = new Random();
     }
 
     public static EcoSystem getBusiness() {
@@ -70,14 +68,6 @@ public class EcoSystem {
 
     public void setTempLocation(LatLong tempLocation) {
         this.tempLocation = tempLocation;
-    }
-
-    public Random getRand() {
-        return rand;
-    }
-
-    public void setRand(Random rand) {
-        this.rand = rand;
     }
 
 }
