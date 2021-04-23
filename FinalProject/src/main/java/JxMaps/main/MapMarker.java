@@ -14,6 +14,7 @@ import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
+import com.teamdev.jxbrowser.js.JsObject;
 import com.teamdev.jxbrowser.navigation.event.NavigationFinished;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import java.awt.BorderLayout;
@@ -21,6 +22,7 @@ import java.awt.Component;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,7 +47,7 @@ public class MapMarker {
             + "    title: 'Hello World!'\n"
             + "});";
 
-    private static int zoomValue = 4;
+    private static int zoomValue = 3;
     private LatLong currentLatLong;
     JFrame mf;
     EcoSystem business;
@@ -53,13 +55,25 @@ public class MapMarker {
     public static String setMarkerOnMap(String lat, String longitude, String name) {
         name = (name == null || name == "") ? "default" : name;
         return "var myLatlng = new google.maps.LatLng(" + lat + "," + longitude + ");\n"
-                + "var marker = new google.maps.Marker({\n"
+                + "var icon = {url: 'Plus_2.png', scaledSize: new google.maps.Size(30, 30)};\n"
+                + "marker = new google.maps.Marker({\n"
                 + "    position: myLatlng,\n"
                 + "    map: map,\n"
-                + "    title: '"+name+"'\n"
-                + "});";
+                + "    icon:icon,"
+                + "    title: '" + name + "'\n"
+                + "});"
+                + "var infowindow = new google.maps.InfoWindow();"
+                + "  bounds.extend(marker.position);"
+                + "google.maps.event.addListener(marker, 'click', (function(marker) {\n"
+                + "        return function() {\n"
+                + "          infowindow.setContent('" + name + "');\n"
+                + "          infowindow.open(map, marker);\n"
+                + "           currentMarker.lat = marker.getPosition().lat()+'';\n "
+                + "           currentMarker.lng = marker.getPosition().lng()+'';\n "
+                + "        }\n"
+                + "      })(marker));"
+                + "   map.fitBounds(bounds);\n";
     }
-
 
     public MapMarker() {
 
@@ -86,7 +100,6 @@ public class MapMarker {
                     .ifPresent(frame -> {
                         this.currentLatLong = getLatLngFromGoogleMapsUrl(browser.url());
 
-                        // CALL THIS FUNCTION TO GET LAT LNG
                         System.out.println(getCurrentBrowserLatLng());
                         system.setTempLocation(getCurrentBrowserLatLng());
 
@@ -98,22 +111,35 @@ public class MapMarker {
             browser.navigation().loadUrl("https://www.google.com/maps");
 
 //            browser
-
-
         });
         return this;
     }
 
-
-    public void setMapMarkers(List<LatLong> coordinateList) {
+    public void setMapMarkers(List<LatLong> coordinateList, EcoSystem system) {
         Browser browser = createBrowser();
         SwingUtilities.invokeLater(() -> {
             BrowserView view = BrowserView.newInstance(browser);
 
-            JButton setMarkerButton = new JButton("Set Marker");
+            JButton saveMarkerButton = new JButton("Save Marker");
             JButton setAddressButton = new JButton("Save Place");
 
-            JPanel toolBar = createToolBar(Arrays.asList(setMarkerButton, setAddressButton));
+            JPanel toolBar = createToolBar(Arrays.asList(saveMarkerButton));
+
+            saveMarkerButton.addActionListener(e -> browser.mainFrame().ifPresent(s -> {
+                JsObject jsObject = s.executeJavaScript("currentMarker");
+                List<String> propertyNames = jsObject.propertyNames();
+                try {
+                    LatLong clickedLatLong = new LatLong((String) jsObject.property("lat").get(), (String) jsObject.property("lng").get());
+                    if (system != null) {
+                        system.setTempLocation(getCurrentBrowserLatLng());
+                    }
+                    System.out.println(clickedLatLong);
+                } catch (NoSuchElementException ex) {
+                    s.executeJavaScript(" M.Toast.dismissAll();  M.toast({html: 'Please click on the markers and save!'})");
+                    System.out.println("show some pop up to say click on the marker. it wont get value if not clicked on marker");
+                }
+
+            }));
 
             createFrame(toolBar, view);
             browser.navigation().loadUrl("file:///" + Paths.get(".").toAbsolutePath().toString()
@@ -127,7 +153,6 @@ public class MapMarker {
             });
         });
     }
-
 
     public LatLong getLatLngFromGoogleMapsUrl(String googleMapsUrl) {
         Optional<String> latLongString = Arrays.asList(googleMapsUrl.split("/")).stream().filter(i -> i.startsWith("@")).findFirst();
@@ -158,6 +183,7 @@ public class MapMarker {
     private Browser createBrowser() {
         EngineOptions options
                 = EngineOptions.newBuilder(HARDWARE_ACCELERATED)
+                        .remoteDebuggingPort(9222)
                         .licenseKey(AppConfig.getInstance().getJXBrowserLicenseKey())
                         .build();
         return Engine.newInstance(options).newBrowser();
