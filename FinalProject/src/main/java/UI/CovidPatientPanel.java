@@ -7,14 +7,14 @@ package UI;
 
 /**
  *
- * @author Skanda
+ * @author Kulbi
  */
-public class PatientPanel extends javax.swing.JPanel {
+public class CovidPatientPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form PatientPanel
      */
-    public PatientPanel() {
+    public CovidPatientPanel() {
         initComponents();
     }
 
