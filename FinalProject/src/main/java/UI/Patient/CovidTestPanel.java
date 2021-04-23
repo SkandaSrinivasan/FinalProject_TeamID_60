@@ -28,6 +28,7 @@ public class CovidTestPanel extends javax.swing.JPanel {
     public CovidTestPanel(EcoSystem system,UserAccount ua) {
         initComponents();
         this.system = system;
+        this.ua = ua;
         pat= null;
         for (Network net : system.getNetworkMap().values()) {
             for (Patient p : net.getPatientDirectory().getPatients()) {
@@ -36,6 +37,7 @@ public class CovidTestPanel extends javax.swing.JPanel {
                 }
             }
         }
+        populateTable();
     }
     public void populateTable(){
         DefaultTableModel model = (DefaultTableModel)cTable.getModel();

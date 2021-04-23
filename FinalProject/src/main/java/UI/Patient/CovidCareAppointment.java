@@ -159,8 +159,7 @@ public class CovidCareAppointment extends javax.swing.JPanel {
             return;
         }
         if (tempLoc == null) {
-            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
-
+            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.ERROR_MESSAGE);
         } else {
             CovidCareCenter co = null;
             for (CovidCareCenter o : net.getCovidCare().getHospitals()) {
@@ -173,7 +172,7 @@ public class CovidCareAppointment extends javax.swing.JPanel {
             co.getPatientList().add(pat);
             doc.getPatientList().add(pat);
             system.setTempLocation(null);
-            JOptionPane.showMessageDialog(this, "Please set a valid location", "Create fail", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Appointment Made!!", "Created", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnMakeAppointmentActionPerformed
 

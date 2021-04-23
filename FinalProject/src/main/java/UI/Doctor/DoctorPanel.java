@@ -6,6 +6,7 @@
 package UI.Doctor;
 
 import Business.Components.Prescription;
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Network.Network;
 import Business.Organization.CovidCareCenter;
@@ -14,7 +15,10 @@ import Business.Organization.Doctor;
 import Business.Organization.Organization;
 import Business.Organization.Patient;
 import Business.UserAccount.UserAccount;
+import com.finalproject.finalproject.LoginPanel;
 import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,7 +35,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     Doctor doc;
     Patient pat;
     CovidCareCenter hosp;
-
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public DoctorPanel(EcoSystem system, UserAccount account) {
         initComponents();
         this.system = system;
@@ -49,7 +53,7 @@ public class DoctorPanel extends javax.swing.JPanel {
                 }
             }
         }
-
+        populateTable();
         lblTitle.setText("Welcome Doctor, " + doc.getFullName());
     }
 
@@ -80,7 +84,8 @@ public class DoctorPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtprescription = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        finishAppointments = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Welcome,Doctor");
@@ -100,7 +105,7 @@ public class DoctorPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Patient List:");
 
-        jLabel3.setText("Covid Tests:");
+        jLabel3.setText("Order Covid Test?");
 
         txtTest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Needed", "PCR", "Antigen" }));
 
@@ -110,10 +115,17 @@ public class DoctorPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Prescription:");
 
-        jButton2.setText("Finish Appointment");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        finishAppointments.setText("Finish Appointment");
+        finishAppointments.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                finishAppointmentsActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -121,7 +133,10 @@ public class DoctorPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,13 +151,15 @@ public class DoctorPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)))))
+                                .addComponent(finishAppointments)))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -155,34 +172,53 @@ public class DoctorPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(finishAppointments))
                 .addGap(0, 54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        if (!txtTest.getSelectedItem().toString().equals("Not Needed")) {
-            String testType = txtTest.getSelectedItem().toString();
-            DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
+    private void finishAppointmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishAppointmentsActionPerformed
+        // TODO add your handling code here:'
+         DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
             int row = patientTable.getSelectedRow();
-            pat = (Patient)model.getValueAt(row, 0);
+            pat = (Patient) model.getValueAt(row, 0);
+        if (!(txtTest.getSelectedItem().toString().equals("Not Needed"))) {
+            System.out.println("Covid test Creation taking place");
+            String testType = txtTest.getSelectedItem().toString();
             CovidTest test = new CovidTest(pat, doc, doc.getCareCenter());
-            test.setType(txtTest.getSelectedItem().toString());
+            test.setType(txtTest.getSelectedItem().toString());     
+            test.setOrderedDate(new Date());
+            test.setOutcome("Pending");
+            test.setReferringDoctor(doc);
+            test.setReferringHospital(doc.getCareCenter());
             pat.getTests().add(test);
             doc.getCareCenter().getCovidTests().add(test);
-            
-            if(!txtprescription.getText().equals("")){
-                Prescription pres = new Prescription(new Date(), txtprescription.getText(), doc);
-                pat.getPrescriptions().add(pres);
-                doc.getCareCenter().getPrescriptions().add(pres);
-            }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (!txtprescription.getText().equals("")) {
+            Prescription pres = new Prescription(new Date(), txtprescription.getText(), doc);
+            pat.getPrescriptions().add(pres);
+            doc.getCareCenter().getPrescriptions().add(pres);
+            
+        }
+            pat.setActiveAppointment(false);
+            doc.getPatientList().remove(pat);
+            populateTable();
+    }//GEN-LAST:event_finishAppointmentsActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        topFrame.getContentPane().removeAll();
+        topFrame.setContentPane(new LoginPanel(this.system));
+        topFrame.revalidate();
+        dB4OUtil.storeSystem(system);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton finishAppointments;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

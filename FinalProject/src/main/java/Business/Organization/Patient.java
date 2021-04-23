@@ -21,7 +21,6 @@ import java.util.List;
  * @author Skanda
  */
 public class Patient extends Person {
-
     double id = 0;
     String insuranceNumber;
     UserAccount user;
@@ -33,9 +32,11 @@ public class Patient extends Person {
     boolean activeAppointment;
     boolean vaxAppointment;
     Date appointmentDate;
+    String vaxStatus;
     String appointmentStatus;
     Network network;
     String covidStatus;
+    
     public Patient(String name, String id,Network network) {
         super(name);
         this.tests = new ArrayList<>();
@@ -46,12 +47,16 @@ public class Patient extends Person {
         this.appointmentStatus = "No Current appointment";
         this.network = network;
         this.covidStatus = "Negative";
+        this.vaxStatus = "Unvaccinated";
     }
 
     public double getId() {
         return id;
     }
-
+ @Override
+    public String toString() {
+        return getName();
+    }
     public void setId(double id) {
         this.id = id;
     }
@@ -144,10 +149,7 @@ public class Patient extends Person {
         this.vaxAppointment = vaxAppointment;
     }
 
-    @Override
-    public String toString() {
-        return this.getName();
-    }
+   
 
     public Network getNetwork() {
         return network;
@@ -163,6 +165,14 @@ public class Patient extends Person {
 
     public void setCovidStatus(String covidStatus) {
         this.covidStatus = covidStatus;
+    }
+
+    public String getVaxStatus() {
+        return vaxStatus;
+    }
+
+    public void setVaxStatus(String vaxStatus) {
+        this.vaxStatus = vaxStatus;
     }
 
 }

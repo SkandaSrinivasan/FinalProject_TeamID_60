@@ -5,6 +5,14 @@
  */
 package UI.Patient;
 
+import Business.Components.Prescription;
+import Business.EcoSystem;
+import Business.Network.Network;
+import Business.Organization.CovidTest;
+import Business.Organization.Patient;
+import Business.UserAccount.UserAccount;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Skanda
@@ -14,10 +22,31 @@ public class CovidTests extends javax.swing.JPanel {
     /**
      * Creates new form CovidTests
      */
+    EcoSystem system;
+    UserAccount ua;
+    Patient pat;
     public CovidTests() {
         initComponents();
+        this.system = system;
+        this.ua = ua;
+        pat= null;
+        for (Network net : system.getNetworkMap().values()) {
+            for (Patient p : net.getPatientDirectory().getPatients()) {
+                if (p.getUser().equals(ua)) {
+                    pat = p;
+                }
+            }
+        }
+        populateTable();
     }
-
+    
+public void populateTable(){
+       DefaultTableModel model = (DefaultTableModel)testTable.getModel();
+       model.setRowCount(0);
+       for(CovidTest c:pat.getTests()){
+           model.addRow(new Object[]{c.getOrderedDate(),c.getType(),c.getReferringHospital(),c.getOutcome()});          
+       }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,12 +58,12 @@ public class CovidTests extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        testTable = new javax.swing.JTable();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("View Covid Tests");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        testTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -42,10 +71,10 @@ public class CovidTests extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Date Taken", "Test Type", "Issuing Lab", "Result"
+                "Date Taken", "Test Type", "Testing Hospital", "Result"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(testTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -73,6 +102,6 @@ public class CovidTests extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable testTable;
     // End of variables declaration//GEN-END:variables
 }
