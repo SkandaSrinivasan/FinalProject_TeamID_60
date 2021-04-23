@@ -33,6 +33,6 @@ public class TestMap {
                 new LatLong("Bondi Beach", "-33.890542", "151.274856, 4"),
                 new LatLong("Coogee Beach", "-34.0282492", "151.157507"),
                 new LatLong("Cronulla Beach", "-33.80010128657071", "151.28747820854187")
-        ));
+        ), null);
     }
 }
