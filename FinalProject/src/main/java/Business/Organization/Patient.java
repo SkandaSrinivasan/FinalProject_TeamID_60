@@ -15,6 +15,8 @@ import Role.Role;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -39,7 +41,7 @@ public class Patient extends Person {
     String covidStatus;
     String requestedVaccine;
     String email;
-    
+    Icon profilePic;
     
     public Patient(String name, String id,Network network) {
         super(name);
@@ -202,6 +204,14 @@ public class Patient extends Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Icon getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(Icon profilePic) {
+        this.profilePic = profilePic;
     }
 
 }
