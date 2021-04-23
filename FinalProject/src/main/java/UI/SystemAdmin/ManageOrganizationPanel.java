@@ -10,6 +10,7 @@ import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.ContactTracingOrganization;
+import Business.Organization.CovidAnalyticsOrganization;
 import UI.HospitalPanel;
 import Business.Organization.CovidCareCenter;
 import Business.Organization.Organization;
@@ -233,6 +234,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 orgBox.addItem("Vaccination Site");
                 orgBox.addItem("Vaccine Supplier");
             }
+            else if (enter.equalsIgnoreCase("Covid Analytics")) {
+                orgBox.removeAll();
+                orgBox.addItem("Covid Analytics");
+            }
+            
         }
     }
     private void entBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entBoxActionPerformed
@@ -289,6 +295,12 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 volOrg.setLocation(location);
                 net.getVaxCenter().getSuppliers().add(volOrg);
                 net.getVaxCenter().getOrganizationDirectory().getOrgList().add(volOrg);
+            }
+            else if (org.equals("Covid Analytics")) {
+                CovidAnalyticsOrganization volOrg = new CovidAnalyticsOrganization(txtOrgName.getText());
+                volOrg.setLocation(location);
+                net.getAnalyticCenter().getAnalytics().add(volOrg);
+                net.getAnalyticCenter().getOrganizationDirectory().getOrgList().add(volOrg);
             }
             populateTable();
         } else {

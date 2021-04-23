@@ -39,7 +39,8 @@ public class Organization {
         Pharmacy("Pharmacy"),
         VaccineSite("VaccineSite"),
         SysAdmin("Sysadmin"),
-        VaccineSupplier("VaccineSupplier");
+        VaccineSupplier("VaccineSupplier"),
+        CovidAnalytics("CovidAnalytics");
 
         private String value;
 

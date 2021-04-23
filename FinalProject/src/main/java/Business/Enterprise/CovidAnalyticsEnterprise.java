@@ -7,6 +7,7 @@ package Business.Enterprise;
 
 import Business.Organization.CovidAnalyticsOrganization;
 import Business.Organization.OrganizationDirectory;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class CovidAnalyticsEnterprise extends Enterprise {
     public CovidAnalyticsEnterprise(String name) {
         super(name, Enterprise.EnterpriseType.AnalyticsUnit);
         this.setOrganizationDirectory(new OrganizationDirectory());
-        
+        this.analytics = new ArrayList<>();
     }
 
     public List<CovidAnalyticsOrganization> getAnalytics() {
