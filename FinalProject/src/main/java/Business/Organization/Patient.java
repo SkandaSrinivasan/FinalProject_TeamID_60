@@ -38,6 +38,8 @@ public class Patient extends Person {
     Network network;
     String covidStatus;
     String requestedVaccine;
+    String email;
+    
     
     public Patient(String name, String id,Network network) {
         super(name);
@@ -184,6 +186,22 @@ public class Patient extends Person {
 
     public void setRequestedVaccine(String requestedVaccine) {
         this.requestedVaccine = requestedVaccine;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

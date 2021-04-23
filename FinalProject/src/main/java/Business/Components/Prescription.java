@@ -6,6 +6,7 @@
 package Business.Components;
 
 import Business.Organization.Doctor;
+import Business.Organization.PharmacyOrganization;
 import java.util.Date;
 
 /**
@@ -17,11 +18,14 @@ public class Prescription {
     Doctor prescribingDoctor;
     String note;
     String filled;
-    public Prescription(Date date,String note,Doctor doc){
+    Date filledDate;
+    PharmacyOrganization pharm;
+    public Prescription(Date date,String note,Doctor doc,PharmacyOrganization pharm){
         this.prescribedDate = date;
         this.note = note;
         this.prescribingDoctor= doc;
         this.filled = "Unfilled";
+        this.pharm = pharm;
     }
 
     public Date getPrescribedDate() {
@@ -59,6 +63,22 @@ public class Prescription {
 
     public void setFilled(String filled) {
         this.filled = filled;
+    }
+
+    public Date getFilledDate() {
+        return filledDate;
+    }
+
+    public void setFilledDate(Date filledDate) {
+        this.filledDate = filledDate;
+    }
+
+    public PharmacyOrganization getPharm() {
+        return pharm;
+    }
+
+    public void setPharm(PharmacyOrganization pharm) {
+        this.pharm = pharm;
     }
     
 }

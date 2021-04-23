@@ -46,7 +46,7 @@ public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
         model.setRowCount(0);
         for (Patient p : org.getPatients()) {
-            model.addRow(new Object[]{p.getName(), p.getPatientId(), p.getNetwork().getName(), p.getVaxStatus()});
+            model.addRow(new Object[]{p, p.getPatientId(), p.getNetwork().getName(), p.getVaxStatus()});
         }
     }
     /**
@@ -115,22 +115,16 @@ public void populateTable() {
         // TODO add your handling code here:
          DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
          int row = patientTable.getSelectedRow();
-         String patientId = (String)model.getValueAt(row, 1);
-         for(Network n:system.getNetworkMap().values()){
-             for(Patient p:n.getPatientDirectory().getPatients()){
-                 if(p.getPatientId().equals(patientId)){
-                     pat = p;
-                 }
-             }
-         }
+         pat= (Patient)patientTable.getValueAt(row, 0);
+         
          pat.setVaxStatus("Vaccinated");
-         org.getPatients().remove(pat);
+        
          org.setPatientsVaxed(org.getPatientsVaxed()+1);
          int stock = 0;
-         System.out.println(pat.getRequestedVaccine());
          stock= org.getVaccineStock().get(pat.getRequestedVaccine());
          stock-=1;
          org.getVaccineStock().put(pat.getRequestedVaccine(),stock);
+          org.getPatients().remove(pat);
          JOptionPane.showMessageDialog(this, "Vaccination Complete", "Success", JOptionPane.INFORMATION_MESSAGE);
          populateTable();
     }//GEN-LAST:event_adminVaccineActionPerformed

@@ -146,7 +146,7 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        ManageCovidTest pane = new ManageCovidTest(system, ua);
+        ManageCovidTest pane = new ManageCovidTest(system, this.ua);
         jSplitPane1.setRightComponent(pane);
     }//GEN-LAST:event_jButton3ActionPerformed
 

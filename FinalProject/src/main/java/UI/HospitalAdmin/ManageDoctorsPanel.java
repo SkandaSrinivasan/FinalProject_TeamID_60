@@ -39,6 +39,7 @@ public class ManageDoctorsPanel extends javax.swing.JPanel {
     public void populateCareBox(){
         
         Network n = (Network) networkBox.getSelectedItem();       
+        careBox.removeAllItems();
         for(Organization s:n.getCovidCare().getOrganizationDirectory().getOrgList()){
             if(s.getType().equals(Organization.Type.CovidCareCenter))
                 careBox.addItem((CovidCareCenter) s); 
