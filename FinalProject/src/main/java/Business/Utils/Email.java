@@ -10,9 +10,19 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.mail.*;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.simplejavamail.api.email.Recipient;
+import org.simplejavamail.api.mailer.AsyncResponse;
+import org.simplejavamail.api.mailer.Mailer;
+import org.simplejavamail.api.mailer.config.TransportStrategy;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
 
 /**
  *
@@ -22,8 +32,20 @@ public class Email {
 
     private static Message mimeMessage;
     private static Session session;
+    private static Mailer asyncMailer;
 
     public Email() {
+        asyncMailer = MailerBuilder
+                .withSMTPServer(AppConfig.getInstance().getSMTPEmailHost(),
+                        Integer.valueOf(AppConfig.getInstance().getSMTPEmailPort()),
+                        AppConfig.getInstance().getSMTPFromEmail(),
+                        AppConfig.getInstance().getSMTPFromEmailPassword())
+                .withTransportStrategy(TransportStrategy.SMTPS)
+                .async()
+                .buildMailer();
+    }
+
+    public Email(boolean useDeprecated) {
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", AppConfig.getInstance().getSMTPEmailHost());
         properties.put("mail.smtp.port", AppConfig.getInstance().getSMTPEmailPort());
@@ -39,6 +61,33 @@ public class Email {
     }
 
     public void sendEmailWithSubject(String toAddress, String subject, String message) {
+        org.simplejavamail.api.email.Email email = EmailBuilder.startingBlank()
+                .from(AppConfig.getInstance().getSMTPFromEmail())
+                .to(toAddress)
+                .withSubject(subject)
+                .withHTMLText(message)
+                .buildEmail();
+        asyncMailer.sendMail(email);
+    }
+
+    public void sendEmailWithSubjectToMany(List<String> toAddresses, String subject, String message) {
+
+        org.simplejavamail.api.email.Email email;
+        try {
+            email = EmailBuilder.startingBlank()
+                    .from(AppConfig.getInstance().getSMTPFromEmail())
+                    .toMultipleAddresses(Arrays.asList(InternetAddress.parse(String.join(",", toAddresses))))
+                    .withSubject(subject)
+                    .withHTMLText(message)
+                    .buildEmail();
+            asyncMailer.sendMail(email);
+        } catch (AddressException ex) {
+            Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void sendEmailWithSubjectV1(String toAddress, String subject, String message) {
+
         try {
             mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
             mimeMessage.setSubject(subject);
@@ -50,7 +99,7 @@ public class Email {
         }
     }
 
-    public void sendEmailWithSubjectToMany(List<String> toAddresses, String subject, String message) {
+    public void sendEmailWithSubjectToManyV1(List<String> toAddresses, String subject, String message) {
         try {
             mimeMessage.addRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", toAddresses)));
             mimeMessage.setSubject(subject);
