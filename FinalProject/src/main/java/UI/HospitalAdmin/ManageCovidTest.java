@@ -32,6 +32,7 @@ public class ManageCovidTest extends javax.swing.JPanel {
         initComponents();
         this.system = system;
         this.ua = ua;
+        System.out.println("Bug Test"+ua.getUserName());
         for (Network n : system.getNetworkMap().values()) {
             for (Organization o : n.getCovidCare().getOrganizationDirectory().getOrgList()) {
                 System.out.println(o.getName()+o.getUser().getUserName()+ua);
@@ -40,7 +41,7 @@ public class ManageCovidTest extends javax.swing.JPanel {
                 }
             }
         }
-        System.out.println("Bug Test"+c.getUser().getUserName());
+        System.out.println("Bug Test"+ua.getUserName());
         populateTable();
     }
 
