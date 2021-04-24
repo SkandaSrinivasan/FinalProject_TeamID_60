@@ -60,9 +60,15 @@ public class PrescriptionPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         pTable = new javax.swing.JTable();
 
+        jLabel1.setBackground(new java.awt.Color(0, 184, 148));
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("View Prescriptions");
+        jLabel1.setText("VIEW PRESCRIPTIONS");
+        jLabel1.setToolTipText("");
+        jLabel1.setOpaque(true);
 
+        pTable.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         pTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
