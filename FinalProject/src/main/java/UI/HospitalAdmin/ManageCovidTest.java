@@ -34,7 +34,7 @@ public class ManageCovidTest extends javax.swing.JPanel {
         this.ua = ua;
         for (Network n : system.getNetworkMap().values()) {
             for (Organization o : n.getCovidCare().getOrganizationDirectory().getOrgList()) {
-                
+                System.out.println(o.getName()+o.getUser().getUserName()+ua);
                 if (o.getUser()!=null && o.getType().equals(Organization.Type.CovidCareCenter) && o.getUser().equals(ua)) {
                     c = (CovidCareCenter) o;                    
                 }

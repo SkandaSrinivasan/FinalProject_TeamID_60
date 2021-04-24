@@ -181,6 +181,10 @@ public class SignupPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please set a location", "Create fail", JOptionPane.ERROR_MESSAGE);
         }
         if (system.getUserDir().isUserUnique(txtUser.getText())) {
+            if (!isValid(txtEmail.getText())) {
+                JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Patient patient = new Patient(txtName.getText(), txtId.getText(), (Network) networkBox.getSelectedItem());
             Network n = (Network) networkBox.getSelectedItem();
             UserAccount user = new UserAccount(txtUser.getText(), txtPass.getText(), new PatientRole());
@@ -194,10 +198,7 @@ public class SignupPanel extends javax.swing.JPanel {
             system.getUserDir().getUsers().add(user);
 
             Email email = new Email();
-            if (!isValid(txtEmail.getText())) {
-                JOptionPane.showMessageDialog(this, "Invalid email", "Fail", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            
             try {
                 email.sendEmailWithSubject(txtEmail.getText(), "Covid Care 360 Admin", "Your User Account has been created.<br>Your Patient ID#: " + txtId.getText());
             } catch (Exception e) {
