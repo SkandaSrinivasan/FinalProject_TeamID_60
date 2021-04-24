@@ -63,8 +63,12 @@ public void populateTable() {
         patientTable = new javax.swing.JTable();
         adminVaccine = new javax.swing.JButton();
 
+        jLabel1.setBackground(new java.awt.Color(0, 184, 148));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Vaccine Administration");
+        jLabel1.setText("VACCINE ADMINISTRATION");
+        jLabel1.setOpaque(true);
 
         patientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,7 +83,10 @@ public void populateTable() {
         ));
         jScrollPane1.setViewportView(patientTable);
 
-        adminVaccine.setText("Administer Vaccine");
+        adminVaccine.setBackground(new java.awt.Color(0, 184, 148));
+        adminVaccine.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        adminVaccine.setForeground(new java.awt.Color(255, 255, 255));
+        adminVaccine.setText("ADMINISTER VACCINE");
         adminVaccine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminVaccineActionPerformed(evt);
@@ -94,20 +101,20 @@ public void populateTable() {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(adminVaccine, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(adminVaccine, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(adminVaccine)
-                .addGap(0, 203, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(adminVaccine, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 208, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

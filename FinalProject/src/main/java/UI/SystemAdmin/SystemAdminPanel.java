@@ -56,7 +56,7 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 493, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,7 +65,9 @@ public class SystemAdminPanel extends javax.swing.JPanel {
 
         jSplitPane1.setRightComponent(jPanel2);
 
-        manageOrganizationBtn.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        manageOrganizationBtn.setBackground(new java.awt.Color(0, 184, 148));
+        manageOrganizationBtn.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        manageOrganizationBtn.setForeground(new java.awt.Color(255, 255, 255));
         manageOrganizationBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-organization-chart-people-24.png"))); // NOI18N
         manageOrganizationBtn.setText("Manage Organizations");
         manageOrganizationBtn.setBorder(null);
@@ -75,7 +77,9 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        manageNetworkBtn.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        manageNetworkBtn.setBackground(new java.awt.Color(0, 184, 148));
+        manageNetworkBtn.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        manageNetworkBtn.setForeground(new java.awt.Color(255, 255, 255));
         manageNetworkBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-networking-manager-24.png"))); // NOI18N
         manageNetworkBtn.setText("Manage Networks          ");
         manageNetworkBtn.setBorder(null);
@@ -85,8 +89,10 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        btnLogout.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-exit-24.png"))); // NOI18N
+        btnLogout.setBackground(new java.awt.Color(211, 84, 0));
+        btnLogout.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrow.png"))); // NOI18N
         btnLogout.setText("Logout                           ");
         btnLogout.setBorder(null);
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +101,9 @@ public class SystemAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jButton1.setBackground(new java.awt.Color(0, 184, 148));
+        jButton1.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-admin-settings-male-50.png"))); // NOI18N
         jButton1.setText("Admin Profile Mgmt.");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -109,12 +117,13 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(manageNetworkBtn)
-                    .addComponent(manageOrganizationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButton1)
+                    .addComponent(manageOrganizationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manageNetworkBtn))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         controlPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnLogout, jButton1, manageNetworkBtn, manageOrganizationBtn});
@@ -122,15 +131,15 @@ public class SystemAdminPanel extends javax.swing.JPanel {
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(manageNetworkBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(manageOrganizationBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(400, Short.MAX_VALUE))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
 
         controlPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnLogout, jButton1, manageNetworkBtn, manageOrganizationBtn});
