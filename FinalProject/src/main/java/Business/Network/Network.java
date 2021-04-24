@@ -41,6 +41,7 @@ public class Network {
         enterpriseList.add(analyticCenter);
         enterpriseList.add(contactTracing);
         this.patientDirectory = new PatientDirectory();
+        
     }
 
 

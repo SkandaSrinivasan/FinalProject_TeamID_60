@@ -5,6 +5,8 @@
  */
 package Business.Organization;
 
+import Role.CovidAnalyticsAdmin;
+
 /**
  *
  * @author Skanda
@@ -13,6 +15,8 @@ public class CovidAnalyticsOrganization extends Organization {
     
     public CovidAnalyticsOrganization(String name) {
         super(name);
+        this.role = new CovidAnalyticsAdmin();
+        this.type = Organization.Type.CovidAnalytics;
     }
     
 }
