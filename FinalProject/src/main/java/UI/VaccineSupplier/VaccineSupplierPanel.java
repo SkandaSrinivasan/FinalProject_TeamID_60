@@ -50,7 +50,7 @@ private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public void updateCounts() {
         txtPfizer.setText(String.valueOf(org.getPfizerDoses()));
         txtModerna.setText(String.valueOf(org.getModernaDoses()));
-        txtJJ.setText(String.valueOf(org.getModernaDoses()));
+        txtJJ.setText(String.valueOf(org.getJjDoses()));
     }
 
     public void populateTable() {
@@ -184,7 +184,8 @@ private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
             }
             if (r.getRequestedVaccine().equals("Pfizer")) {
                 if (org.getPfizerDoses() > Integer.parseInt(r.getDosesRequired())) {
-                    r.getSite().getVaccineStock().put("Pfizer", org.getPfizerDoses() - Integer.parseInt(r.getDosesRequired()));
+                    int vaxSite = r.getSite().getVaccineStock().get("Pfizer");
+                    r.getSite().getVaccineStock().put("Pfizer", vaxSite + Integer.parseInt(r.getDosesRequired()));
                     org.setPfizerDoses(org.getPfizerDoses() - Integer.parseInt(r.getDosesRequired()));
                     r.setStatus("Fulfilled");
                     JOptionPane.showMessageDialog(this, "Request Fulfilled successfully", "Pass", JOptionPane.INFORMATION_MESSAGE);
@@ -194,7 +195,8 @@ private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
             }
             if (r.getRequestedVaccine().equals("Moderna")) {
                 if (org.getModernaDoses() > Integer.parseInt(r.getDosesRequired())) {
-                    r.getSite().getVaccineStock().put("Moderna", org.getModernaDoses() - Integer.parseInt(r.getDosesRequired()));
+                    int vaxSite = r.getSite().getVaccineStock().get("Moderna");
+                    r.getSite().getVaccineStock().put("Moderna", vaxSite + Integer.parseInt(r.getDosesRequired()));
                     org.setModernaDoses(org.getModernaDoses() - Integer.parseInt(r.getDosesRequired()));
                     r.setStatus("Fulfilled");
                     JOptionPane.showMessageDialog(this, "Request Fulfilled successfully", "Pass", JOptionPane.INFORMATION_MESSAGE);
@@ -204,7 +206,8 @@ private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
             }
             if (r.getRequestedVaccine().equals("J&J")) {
                 if (org.getJjDoses() > Integer.parseInt(r.getDosesRequired())) {
-                    r.getSite().getVaccineStock().put("J&J", org.getJjDoses() - Integer.parseInt(r.getDosesRequired()));
+                    int vaxSite = r.getSite().getVaccineStock().get("J&J");
+                    r.getSite().getVaccineStock().put("J&J", vaxSite + Integer.parseInt(r.getDosesRequired()));
                     r.setStatus("Fulfilled");
                     org.setJjDoses(org.getJjDoses() - Integer.parseInt(r.getDosesRequired()));
                     JOptionPane.showMessageDialog(this, "Request Fulfilled successfully", "Pass", JOptionPane.INFORMATION_MESSAGE);

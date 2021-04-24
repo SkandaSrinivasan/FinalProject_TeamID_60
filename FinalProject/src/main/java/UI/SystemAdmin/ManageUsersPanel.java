@@ -207,6 +207,10 @@ public class ManageUsersPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Username already exists", "Create failed", JOptionPane.ERROR_MESSAGE);
         }
         else{
+            if(org.getUser()!=null){
+                JOptionPane.showMessageDialog(this, "Admin profile exists", "Create failed", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             UserAccount account = new UserAccount(txtUser.getText(), txtPass.getText(), org.getRole());
             org.getUserAccountDirectory().getUsers().add(account);
             org.setUser(account);

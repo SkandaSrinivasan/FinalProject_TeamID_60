@@ -19,6 +19,7 @@ import Business.UserAccount.UserAccount;
 import com.finalproject.finalproject.LoginPanel;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -236,6 +237,10 @@ public class DoctorPanel extends javax.swing.JPanel {
          DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
             int row = patientTable.getSelectedRow();
             pat = (Patient) model.getValueAt(row, 0);
+            if(row<0){
+                JOptionPane.showMessageDialog(this, "No Patient selected", "Create Fail", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         if (!(txtTest.getSelectedItem().toString().equals("Not Needed"))) {
             System.out.println("Covid test Creation taking place");
             String testType = txtTest.getSelectedItem().toString();
@@ -259,6 +264,7 @@ public class DoctorPanel extends javax.swing.JPanel {
             pat.setAppointmentStatus("No Upcoming Appointment");
             doc.getPatientList().remove(pat);
             populateTable();
+            JOptionPane.showMessageDialog(this, "Checkup Complete!", "Checkup", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_finishAppointmentsActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
