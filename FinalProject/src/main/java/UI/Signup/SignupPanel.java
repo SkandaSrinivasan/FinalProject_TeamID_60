@@ -17,9 +17,13 @@ import Role.PatientRole;
 import com.finalproject.finalproject.LoginPanel;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import com.github.sarxos.webcam.Webcam;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -47,7 +51,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 new Locale("en-GB"), new RandomService());
 
         String prefix = fakeValuesService.bothify("??##");
-        
+
         txtId.setText("#" + prefix + String.valueOf(new Random().nextInt(1000000)));
     }
 
@@ -74,10 +78,10 @@ public class SignupPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        txtLocation = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        snap = new javax.swing.JButton();
+        pic = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -135,15 +139,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 420, 169, 40));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Location");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, 110, -1));
-
-        txtLocation.setEditable(false);
-        add(txtLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 252, 33));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 169, 40));
 
         jButton2.setBackground(new java.awt.Color(85, 239, 196));
         jButton2.setText("REGISTER");
@@ -162,6 +158,15 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 500, 192, 33));
+
+        snap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-camera-24.png"))); // NOI18N
+        snap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                snapActionPerformed(evt);
+            }
+        });
+        add(snap, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 120, 50, 50));
+        add(pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 180, 140, 160));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -184,6 +189,7 @@ public class SignupPanel extends javax.swing.JPanel {
             loc.setName(patient.getName());
             patient.setLocation(loc);
             patient.setEmail(txtEmail.getText());
+            patient.setProfilePic(pic.getIcon());
             n.getPatientDirectory().getPatients().add(patient);
             system.getUserDir().getUsers().add(user);
 
@@ -224,6 +230,18 @@ public class SignupPanel extends javax.swing.JPanel {
         dB4OUtil.storeSystem(system);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void snapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snapActionPerformed
+        // TODO add your handling code here:
+        Webcam webcam = Webcam.getDefault();
+        webcam.open();
+        BufferedImage image = webcam.getImage();
+        ImageIcon img = new ImageIcon(image);
+        Image newimg = img.getImage().getScaledInstance(140, 160, java.awt.Image.SCALE_SMOOTH);
+        img = new ImageIcon(newimg);
+        pic.setIcon(img);
+        webcam.close();
+    }//GEN-LAST:event_snapActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -236,11 +254,11 @@ public class SignupPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JComboBox<Network> networkBox;
+    private javax.swing.JLabel pic;
+    private javax.swing.JButton snap;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtLocation;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUser;
