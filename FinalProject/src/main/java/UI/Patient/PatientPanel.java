@@ -52,7 +52,7 @@ public class PatientPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
 
         btnCareApptmt.setBackground(new java.awt.Color(0, 184, 148));
-        btnCareApptmt.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        btnCareApptmt.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnCareApptmt.setForeground(new java.awt.Color(255, 255, 255));
         btnCareApptmt.setText("COVID CARE APPOINTMENTS");
         btnCareApptmt.addActionListener(new java.awt.event.ActionListener() {
@@ -82,9 +82,9 @@ public class PatientPanel extends javax.swing.JPanel {
         });
 
         jButton4.setBackground(new java.awt.Color(0, 184, 148));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Make Vaccine Appointment");
+        jButton4.setText("MAKE VACCINE APPOINTMENT");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -103,7 +103,7 @@ public class PatientPanel extends javax.swing.JPanel {
         });
 
         jButton5.setBackground(new java.awt.Color(0, 184, 148));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("PATIENT PROFILE");
         jButton5.addActionListener(new java.awt.event.ActionListener() {

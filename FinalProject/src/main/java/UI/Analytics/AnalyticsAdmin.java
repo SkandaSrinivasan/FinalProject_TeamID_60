@@ -43,7 +43,9 @@ public class AnalyticsAdmin extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButton1.setBackground(new java.awt.Color(0, 184, 148));
+        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("ANALYTICS GRAPHS");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,7 +53,10 @@ public class AnalyticsAdmin extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButton2.setBackground(new java.awt.Color(211, 84, 0));
+        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrow.png"))); // NOI18N
         jButton2.setText("LOGOUT");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,7 +64,9 @@ public class AnalyticsAdmin extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButton3.setBackground(new java.awt.Color(0, 184, 148));
+        jButton3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("ANALYTIC MAPS");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,12 +85,12 @@ public class AnalyticsAdmin extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton1)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(jButton2)
-                .addGap(0, 394, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 367, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
